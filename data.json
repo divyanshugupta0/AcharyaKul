@@ -1,0 +1,127 @@
+{
+  "classes": [
+    {
+      "id": "mmytj4xljohw2x",
+      "subject": "Mathematics",
+      "description": "Algebra, arithmetic, and problem solving.",
+      "mode": "ai",
+      "teacherId": "demo-teacher",
+      "createdAt": "2026-03-20T11:31:13.208Z"
+    },
+    {
+      "id": "mmytj4xlbz8yz2",
+      "subject": "Science",
+      "description": "Physics, chemistry, and experiments.",
+      "mode": "ai",
+      "teacherId": "demo-teacher",
+      "createdAt": "2026-03-20T11:31:13.208Z"
+    },
+    {
+      "id": "mmytj4xl58o9sb",
+      "subject": "English",
+      "description": "Grammar, writing, and reading comprehension.",
+      "mode": "human",
+      "teacherId": "demo-teacher",
+      "createdAt": "2026-03-20T11:31:13.208Z"
+    },
+    {
+      "id": "mmytuxhh68f0b3",
+      "subject": "Maths",
+      "description": "",
+      "mode": "human",
+      "teacherId": "sdb",
+      "createdAt": "2026-03-20T11:40:23.429Z"
+    }
+  ],
+  "teachers": [
+    {
+      "id": "sdb",
+      "firstSeen": "2026-03-20T11:44:20.669Z",
+      "lastSeen": "2026-03-20T12:29:25.693Z"
+    }
+  ],
+  "students": [
+    {
+      "name": "Anonymous",
+      "firstSeen": "2026-03-20T11:45:59.895Z",
+      "lastSeen": "2026-03-20T11:47:46.065Z"
+    }
+  ],
+  "quizzes": [
+    {
+      "id": "mmyu1wrcwtxq08",
+      "question": "What is Earth?",
+      "options": [
+        "planet",
+        "place",
+        "land",
+        "atmosphere"
+      ],
+      "classId": "all",
+      "teacherId": "sdb",
+      "correctIndex": 0,
+      "createdAt": "2026-03-20T11:45:49.080Z"
+    },
+    {
+      "id": "mmyu1wrti7gg4w",
+      "question": "Car have _____wheels?",
+      "options": [
+        "5",
+        "4",
+        "2",
+        "3"
+      ],
+      "classId": "all",
+      "teacherId": "sdb",
+      "correctIndex": 1,
+      "createdAt": "2026-03-20T11:45:49.097Z"
+    }
+  ],
+  "assignments": [
+    {
+      "id": "mmyu2y4p13hme3",
+      "title": "Submit",
+      "description": "",
+      "classId": "mmytuxhh68f0b3",
+      "teacherId": "sdb",
+      "createdAt": "2026-03-20T11:46:37.513Z"
+    }
+  ],
+  "quizSubmissions": [
+    {
+      "id": "mmyu253rvcrras",
+      "studentName": "Anonymous",
+      "answers": [
+        {
+          "quizId": "mmyu1wrcwtxq08",
+          "answerIndex": 0
+        },
+        {
+          "quizId": "mmyu1wrti7gg4w",
+          "answerIndex": 0
+        }
+      ],
+      "score": 1,
+      "total": 2,
+      "submittedAt": "2026-03-20T11:45:59.895Z"
+    },
+    {
+      "id": "mmyu4f0x6gkdqm",
+      "studentName": "Anonymous",
+      "answers": [
+        {
+          "quizId": "mmyu1wrcwtxq08",
+          "answerIndex": 0
+        },
+        {
+          "quizId": "mmyu1wrti7gg4w",
+          "answerIndex": 1
+        }
+      ],
+      "score": 2,
+      "total": 2,
+      "submittedAt": "2026-03-20T11:47:46.065Z"
+    }
+  ],
+  "assignmentSubmissions": []
+}

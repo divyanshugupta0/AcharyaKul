@@ -1,0 +1,124 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OLMS Admin</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body data-role="admin">
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="logo">OLMS</div>
+          <div>
+            <div class="title">Admin Center</div>
+            <div class="subtitle">Monitor the learning network</div>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="subtitle">Navigation</div>
+          <nav class="side-nav" aria-label="Admin navigation">
+            <button class="side-btn active" data-tab="overview">Overview</button>
+            <button class="side-btn" data-tab="teachers">Teachers</button>
+            <button class="side-btn" data-tab="students">Students</button>
+            <button class="side-btn" data-tab="classes">Classes</button>
+          </nav>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="subtitle">Status</div>
+          <div class="side-meta">
+            <span class="status-pill">Role: Admin</span>
+            <span class="status-pill">Read-only</span>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main">
+        <div class="app">
+          <header class="topbar">
+            <div>
+              <div class="page-title">System Overview</div>
+              <div class="page-subtitle">Track teachers, students, and classes in real time.</div>
+            </div>
+            <button class="ghost-btn" id="refreshAdmin">Refresh</button>
+          </header>
+
+          <section class="panel active" id="tab-overview">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">Overview</div>
+                <div class="panel-subtitle">Key totals across the platform.</div>
+              </div>
+            </div>
+            <div class="panel-body">
+              <div class="metrics">
+                <div class="metric-card">
+                  <div class="metric-label">Teachers</div>
+                  <div class="metric-value" id="totalTeachers">0</div>
+                </div>
+                <div class="metric-card">
+                  <div class="metric-label">Students</div>
+                  <div class="metric-value" id="totalStudents">0</div>
+                </div>
+                <div class="metric-card">
+                  <div class="metric-label">Classes</div>
+                  <div class="metric-value" id="totalClasses">0</div>
+                </div>
+                <div class="metric-card">
+                  <div class="metric-label">Quizzes</div>
+                  <div class="metric-value" id="totalQuizzes">0</div>
+                </div>
+                <div class="metric-card">
+                  <div class="metric-label">Assignments</div>
+                  <div class="metric-value" id="totalAssignments">0</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel" id="tab-teachers">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">Teachers</div>
+                <div class="panel-subtitle">Active teacher accounts.</div>
+              </div>
+            </div>
+            <div class="panel-body">
+              <div class="list" id="teacherList"></div>
+            </div>
+          </section>
+
+          <section class="panel" id="tab-students">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">Students</div>
+                <div class="panel-subtitle">Students who submitted quizzes or assignments.</div>
+              </div>
+            </div>
+            <div class="panel-body">
+              <div class="list" id="studentList"></div>
+            </div>
+          </section>
+
+          <section class="panel" id="tab-classes">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">Classes</div>
+                <div class="panel-subtitle">All subjects created by teachers.</div>
+              </div>
+            </div>
+            <div class="panel-body">
+              <div class="list" id="classList"></div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
+

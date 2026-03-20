@@ -1,0 +1,194 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OLMS Teacher</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body data-role="teacher">
+    <div class="gate" id="teacherGate">
+      <div class="gate-card">
+        <h2>Teacher Access</h2>
+        <p>Enter your Teacher ID to open your dashboard.</p>
+        <input id="teacherIdInput" type="text" placeholder="Enter your Teacher ID" />
+        <button id="teacherIdBtn">Enter Dashboard</button>
+        <p class="gate-hint">Use your unique ID to keep your classes private.</p>
+      </div>
+    </div>
+
+    <div class="layout" id="teacherShell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="logo">OLMS</div>
+          <div>
+            <div class="title">Teacher Studio</div>
+            <div class="subtitle">Manage classes and live sessions</div>
+          </div>
+        </div>
+
+        <nav class="side-nav">
+          <button class="side-btn active" data-tab="studio">Studio</button>
+          <button class="side-btn" data-tab="create">Create</button>
+          <button class="side-btn" data-tab="library">Library</button>
+        </nav>
+
+        <div class="side-meta">
+          <span class="status-pill" id="teacherIdLabel">Teacher ID: --</span>
+          <button class="link-btn" id="changeTeacher">Change ID</button>
+        </div>
+      </aside>
+
+      <main class="main">
+        <div class="app">
+          <header class="topbar">
+            <div>
+              <div class="page-title">Teacher Studio</div>
+              <div class="page-subtitle">Plan live sessions, quizzes, and assignments.</div>
+            </div>
+            <div class="topbar-meta">
+              <span class="status-pill" id="teacherLiveLabel">Live: Off</span>
+            </div>
+          </header>
+
+          <section class="hero-strip">
+            <div class="hero-card">
+              <div class="hero-title">Classes</div>
+              <div class="hero-value" id="heroClassCount">0</div>
+              <div class="hero-sub">Active subjects</div>
+            </div>
+            <div class="hero-card">
+              <div class="hero-title">Quizzes</div>
+              <div class="hero-value" id="heroQuizCount">0</div>
+              <div class="hero-sub">Published questions</div>
+            </div>
+            <div class="hero-card">
+              <div class="hero-title">Assignments</div>
+              <div class="hero-value" id="heroAssignmentCount">0</div>
+              <div class="hero-sub">Open submissions</div>
+            </div>
+          </section>
+
+          <section class="panel active" id="tab-studio">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">Live Room</div>
+                <div class="panel-subtitle">Start a camera preview for live teaching.</div>
+              </div>
+              <div class="live-controls">
+                <select id="liveClassSelect"></select>
+                <button id="liveToggle">Start Live</button>
+                <button type="button" class="ghost-btn" id="screenShareToggle">Share Screen</button>
+                <span class="live-status" id="liveStatus">Camera off</span>
+              </div>
+            </div>
+            <video id="teacherVideo" autoplay muted playsinline></video>
+            <p class="hint">This preview is local to your device.</p>
+
+            <div class="panel-divider"></div>
+
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">Class Control</div>
+                <div class="panel-subtitle">Choose what students see in each class.</div>
+              </div>
+            </div>
+            <label for="classModeSelect">Select Class</label>
+            <select id="classModeSelect"></select>
+            <div class="mode-group">
+              <button class="mode-btn" data-mode="ai">AI Teaching</button>
+              <button class="mode-btn" data-mode="human">Live Teacher</button>
+            </div>
+            <span class="status" id="classModeStatus">Pick a class to update the mode.</span>
+          </section>
+
+          <section class="panel" id="tab-create">
+            <div class="panel-grid">
+              <div class="card">
+                <div class="card-header">
+                  <h2>Create Class</h2>
+                  <p>Build a new subject for your students.</p>
+                </div>
+                <form class="form" id="classForm">
+                  <label for="classSubject">Subject</label>
+                  <input id="classSubject" type="text" placeholder="Subject name" required />
+                  <label for="classDesc">Description</label>
+                  <textarea id="classDesc" rows="3" placeholder="Short summary"></textarea>
+                  <label for="classNext">Next Session</label>
+                  <input id="classNext" type="text" placeholder="Next session time" />
+                  <label for="classSchedule">Schedule Notes</label>
+                  <input id="classSchedule" type="text" placeholder="Schedule notes" />
+                  <label for="classUpcoming">Upcoming Sessions (one per line)</label>
+                  <textarea id="classUpcoming" rows="3" placeholder="One session per line"></textarea>
+                  <button type="submit">Create Class</button>
+                  <span class="status" id="classStatus">Ready</span>
+                </form>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <h2>Create Quiz</h2>
+                  <p>Add multiple questions for one quiz session.</p>
+                </div>
+                <form class="form" id="quizForm">
+                  <label for="quizClass">Class</label>
+                  <select id="quizClass"></select>
+                  <div class="question-stack" id="questionList"></div>
+                  <div class="quiz-actions">
+                    <button type="button" class="ghost-btn" id="addQuestion">Add Question</button>
+                    <button type="submit">Publish Quiz</button>
+                    <span class="status" id="quizStatus">Ready</span>
+                  </div>
+                </form>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <h2>Create Assignment</h2>
+                  <p>Give students deeper practice.</p>
+                </div>
+                <form class="form" id="assignmentForm">
+                  <label for="assignmentClass">Class</label>
+                  <select id="assignmentClass"></select>
+                  <label for="assignmentTitle">Title</label>
+                  <input id="assignmentTitle" type="text" placeholder="Assignment title" required />
+                  <label for="assignmentDesc">Description</label>
+                  <textarea id="assignmentDesc" rows="4" placeholder="Describe the task"></textarea>
+                  <button type="submit">Publish Assignment</button>
+                  <span class="status" id="assignmentStatus">Ready</span>
+                </form>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel" id="tab-library">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">Content Library</div>
+                <div class="panel-subtitle">Your classes, quizzes, and assignments.</div>
+              </div>
+            </div>
+            <div class="library">
+              <div>
+                <h3>Classes</h3>
+                <div id="classList" class="list"></div>
+              </div>
+              <div>
+                <h3>Quizzes</h3>
+                <div id="quizList" class="list"></div>
+              </div>
+              <div>
+                <h3>Assignments</h3>
+                <div id="assignmentList" class="list"></div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
+
