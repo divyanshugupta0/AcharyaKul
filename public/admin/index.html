@@ -1,18 +1,29 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>OLMS Admin</title>
+    <title>AcharyaKul Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700;900&family=Manrope:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body data-role="admin">
     <div class="layout">
       <aside class="sidebar">
         <div class="brand">
-          <div class="logo">OLMS</div>
+          <div class="logo">AcharyaKul</div>
           <div>
             <div class="title">Admin Center</div>
+            <div class="tagline">The Digital Lyceum</div>
             <div class="subtitle">Monitor the learning network</div>
           </div>
         </div>
@@ -20,10 +31,30 @@
         <div class="sidebar-section">
           <div class="subtitle">Navigation</div>
           <nav class="side-nav" aria-label="Admin navigation">
-            <button class="side-btn active" data-tab="overview">Overview</button>
-            <button class="side-btn" data-tab="teachers">Teachers</button>
-            <button class="side-btn" data-tab="students">Students</button>
-            <button class="side-btn" data-tab="classes">Classes</button>
+            <button class="side-btn active" data-tab="overview">
+              <span class="material-symbols-outlined">dashboard</span>
+              <span>Overview</span>
+            </button>
+            <button class="side-btn" data-tab="teachers">
+              <span class="material-symbols-outlined">school</span>
+              <span>Teachers</span>
+            </button>
+            <button class="side-btn" data-tab="students">
+              <span class="material-symbols-outlined">groups</span>
+              <span>Students</span>
+            </button>
+            <button class="side-btn" data-tab="classes">
+              <span class="material-symbols-outlined">class</span>
+              <span>Classes</span>
+            </button>
+            <button class="side-btn" data-tab="assessments">
+              <span class="material-symbols-outlined">assignment</span>
+              <span>Assessments</span>
+            </button>
+            <button class="side-btn" data-tab="submissions">
+              <span class="material-symbols-outlined">history_edu</span>
+              <span>Submissions</span>
+            </button>
           </nav>
         </div>
 
@@ -32,6 +63,24 @@
           <div class="side-meta">
             <span class="status-pill">Role: Admin</span>
             <span class="status-pill">Read-only</span>
+            <span class="status-pill">Auto-refresh: 20s</span>
+          </div>
+        </div>
+
+        <div class="sidebar-footer">
+          <button class="primary-btn" type="button">
+            <span class="material-symbols-outlined">bolt</span>
+            Join Live Class
+          </button>
+          <div class="side-links">
+            <button class="link-btn" type="button">
+              <span class="material-symbols-outlined">help</span>
+              Help Center
+            </button>
+            <button class="link-btn danger" type="button">
+              <span class="material-symbols-outlined">logout</span>
+              Logout
+            </button>
           </div>
         </div>
       </aside>
@@ -39,18 +88,44 @@
       <main class="main">
         <div class="app">
           <header class="topbar">
-            <div>
-              <div class="page-title">System Overview</div>
+            <div class="topbar-left">
+              <div class="page-title">Admin Dashboard</div>
               <div class="page-subtitle">Track teachers, students, and classes in real time.</div>
+              <label class="topbar-search">
+                <span class="material-symbols-outlined">search</span>
+                <input type="text" placeholder="Global search..." />
+              </label>
             </div>
-            <button class="ghost-btn" id="refreshAdmin">Refresh</button>
+            <div class="topbar-right">
+              <div class="topbar-icons">
+                <button class="icon-btn" type="button" aria-label="Notifications">
+                  <span class="material-symbols-outlined">notifications</span>
+                </button>
+                <button class="icon-btn" type="button" aria-label="Analytics">
+                  <span class="material-symbols-outlined">monitoring</span>
+                </button>
+              </div>
+              <div class="top-actions">
+                <div class="last-updated">Last updated: <span id="lastUpdated">--</span></div>
+                <button class="ghost-btn" id="refreshAdmin">Refresh</button>
+              </div>
+              <div class="user-chip">
+                <div class="user-avatar">AK</div>
+                <div>
+                  <div class="user-name">Super Admin</div>
+                  <div class="user-role">System Control</div>
+                </div>
+              </div>
+            </div>
           </header>
+
+          <div class="banner" id="errorBanner" hidden></div>
 
           <section class="panel active" id="tab-overview">
             <div class="panel-header">
               <div>
                 <div class="panel-title">Overview</div>
-                <div class="panel-subtitle">Key totals across the platform.</div>
+                <div class="panel-subtitle">Key totals and platform health.</div>
               </div>
             </div>
             <div class="panel-body">
@@ -75,6 +150,41 @@
                   <div class="metric-label">Assignments</div>
                   <div class="metric-value" id="totalAssignments">0</div>
                 </div>
+                <div class="metric-card">
+                  <div class="metric-label">Quiz Submissions</div>
+                  <div class="metric-value" id="totalQuizSubmissions">0</div>
+                </div>
+                <div class="metric-card">
+                  <div class="metric-label">Assignment Submissions</div>
+                  <div class="metric-value" id="totalAssignmentSubmissions">0</div>
+                </div>
+                <div class="metric-card">
+                  <div class="metric-label">Avg Quiz Score</div>
+                  <div class="metric-value" id="avgQuizScore">0%</div>
+                </div>
+                <div class="metric-card">
+                  <div class="metric-label">Active Teachers</div>
+                  <div class="metric-value" id="activeTeachers">0</div>
+                </div>
+                <div class="metric-card">
+                  <div class="metric-label">Active Students</div>
+                  <div class="metric-value" id="activeStudents">0</div>
+                </div>
+              </div>
+
+              <div class="overview-panels">
+                <div class="info-card">
+                  <div class="info-title">Recent Activity</div>
+                  <div class="mini-list" id="activityFeed"></div>
+                </div>
+                <div class="info-card">
+                  <div class="info-title">System Health</div>
+                  <div class="health-row">
+                    <span class="health-status" id="healthStatus">Checking...</span>
+                    <span class="health-time" id="healthTime">--</span>
+                  </div>
+                  <div class="health-note">API availability and server time.</div>
+                </div>
               </div>
             </div>
           </section>
@@ -86,9 +196,23 @@
                 <div class="panel-subtitle">Active teacher accounts.</div>
               </div>
             </div>
-            <div class="panel-body">
-              <div class="list" id="teacherList"></div>
+            <div class="panel-actions">
+              <div class="filters">
+                <input class="search-input" id="teacherSearch" placeholder="Search teacher ID" />
+                <label class="toggle">
+                  <input type="checkbox" id="teacherActiveOnly" />
+                  Active only
+                </label>
+                <select class="select" id="teacherSort">
+                  <option value="lastSeen">Sort: Last seen</option>
+                  <option value="name">Sort: Name</option>
+                  <option value="classes">Sort: Classes</option>
+                </select>
+              </div>
+              <button class="ghost-btn" id="exportTeachers">Export CSV</button>
             </div>
+            <div class="list-meta" id="teacherMeta">0 teachers</div>
+            <div class="list" id="teacherList"></div>
           </section>
 
           <section class="panel" id="tab-students">
@@ -98,9 +222,22 @@
                 <div class="panel-subtitle">Students who submitted quizzes or assignments.</div>
               </div>
             </div>
-            <div class="panel-body">
-              <div class="list" id="studentList"></div>
+            <div class="panel-actions">
+              <div class="filters">
+                <input class="search-input" id="studentSearch" placeholder="Search student name" />
+                <label class="toggle">
+                  <input type="checkbox" id="studentActiveOnly" />
+                  Active only
+                </label>
+                <select class="select" id="studentSort">
+                  <option value="lastSeen">Sort: Last seen</option>
+                  <option value="name">Sort: Name</option>
+                </select>
+              </div>
+              <button class="ghost-btn" id="exportStudents">Export CSV</button>
             </div>
+            <div class="list-meta" id="studentMeta">0 students</div>
+            <div class="list" id="studentList"></div>
           </section>
 
           <section class="panel" id="tab-classes">
@@ -110,8 +247,139 @@
                 <div class="panel-subtitle">All subjects created by teachers.</div>
               </div>
             </div>
-            <div class="panel-body">
-              <div class="list" id="classList"></div>
+            <div class="panel-actions">
+              <div class="filters">
+                <input class="search-input" id="classSearch" placeholder="Search subject or description" />
+                <select class="select" id="classTeacherFilter"></select>
+                <select class="select" id="classModeFilter">
+                  <option value="">Mode: All</option>
+                  <option value="ai">Mode: AI</option>
+                  <option value="human">Mode: Live</option>
+                </select>
+                <select class="select" id="classSort">
+                  <option value="createdAt">Sort: Newest</option>
+                  <option value="subject">Sort: Subject</option>
+                </select>
+              </div>
+              <button class="ghost-btn" id="exportClasses">Export CSV</button>
+            </div>
+            <div class="list-meta" id="classMeta">0 classes</div>
+            <div class="list" id="classList"></div>
+          </section>
+
+          <section class="panel" id="tab-assessments">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">Assessments</div>
+                <div class="panel-subtitle">Quizzes and assignments created by teachers.</div>
+              </div>
+            </div>
+
+            <div class="panel-block">
+              <div class="panel-block-header">
+                <div>
+                  <div class="panel-title">Quizzes</div>
+                  <div class="panel-subtitle">Multiple-choice quizzes across classes.</div>
+                </div>
+              </div>
+              <div class="panel-actions">
+                <div class="filters">
+                  <input class="search-input" id="quizSearch" placeholder="Search quiz question" />
+                  <select class="select" id="quizTeacherFilter"></select>
+                  <select class="select" id="quizClassFilter"></select>
+                  <label class="toggle">
+                    <input type="checkbox" id="quizShowAnswers" />
+                    Show answers
+                  </label>
+                  <select class="select" id="quizSort">
+                    <option value="createdAt">Sort: Newest</option>
+                    <option value="question">Sort: Question</option>
+                  </select>
+                </div>
+                <button class="ghost-btn" id="exportQuizzes">Export CSV</button>
+              </div>
+              <div class="list-meta" id="quizMeta">0 quizzes</div>
+              <div class="list" id="quizList"></div>
+            </div>
+
+            <div class="panel-block">
+              <div class="panel-block-header">
+                <div>
+                  <div class="panel-title">Assignments</div>
+                  <div class="panel-subtitle">Written tasks assigned to students.</div>
+                </div>
+              </div>
+              <div class="panel-actions">
+                <div class="filters">
+                  <input class="search-input" id="assignmentSearch" placeholder="Search assignment title" />
+                  <select class="select" id="assignmentTeacherFilter"></select>
+                  <select class="select" id="assignmentClassFilter"></select>
+                  <select class="select" id="assignmentSort">
+                    <option value="createdAt">Sort: Newest</option>
+                    <option value="title">Sort: Title</option>
+                  </select>
+                </div>
+                <button class="ghost-btn" id="exportAssignments">Export CSV</button>
+              </div>
+              <div class="list-meta" id="assignmentMeta">0 assignments</div>
+              <div class="list" id="assignmentList"></div>
+            </div>
+          </section>
+
+          <section class="panel" id="tab-submissions">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">Submissions</div>
+                <div class="panel-subtitle">Student attempts and assignment uploads.</div>
+              </div>
+            </div>
+
+            <div class="panel-block">
+              <div class="panel-block-header">
+                <div>
+                  <div class="panel-title">Quiz Submissions</div>
+                  <div class="panel-subtitle">Latest quiz attempts.</div>
+                </div>
+              </div>
+              <div class="panel-actions">
+                <div class="filters">
+                  <input class="search-input" id="quizSubmissionSearch" placeholder="Search student name" />
+                  <select class="select" id="quizSubmissionTeacherFilter"></select>
+                  <select class="select" id="quizSubmissionClassFilter"></select>
+                  <select class="select" id="quizSubmissionRange">
+                    <option value="">Range: All</option>
+                    <option value="7">Range: Last 7 days</option>
+                    <option value="30">Range: Last 30 days</option>
+                  </select>
+                </div>
+                <button class="ghost-btn" id="exportQuizSubmissions">Export CSV</button>
+              </div>
+              <div class="list-meta" id="quizSubmissionMeta">0 submissions</div>
+              <div class="list" id="quizSubmissionList"></div>
+            </div>
+
+            <div class="panel-block">
+              <div class="panel-block-header">
+                <div>
+                  <div class="panel-title">Assignment Submissions</div>
+                  <div class="panel-subtitle">Latest written answers.</div>
+                </div>
+              </div>
+              <div class="panel-actions">
+                <div class="filters">
+                  <input class="search-input" id="assignmentSubmissionSearch" placeholder="Search student name" />
+                  <select class="select" id="assignmentSubmissionTeacherFilter"></select>
+                  <select class="select" id="assignmentSubmissionClassFilter"></select>
+                  <select class="select" id="assignmentSubmissionRange">
+                    <option value="">Range: All</option>
+                    <option value="7">Range: Last 7 days</option>
+                    <option value="30">Range: Last 30 days</option>
+                  </select>
+                </div>
+                <button class="ghost-btn" id="exportAssignmentSubmissions">Export CSV</button>
+              </div>
+              <div class="list-meta" id="assignmentSubmissionMeta">0 submissions</div>
+              <div class="list" id="assignmentSubmissionList"></div>
             </div>
           </section>
         </div>
@@ -121,4 +389,3 @@
     <script src="script.js"></script>
   </body>
 </html>
-

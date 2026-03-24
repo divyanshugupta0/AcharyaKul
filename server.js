@@ -142,6 +142,27 @@ function parseList(value) {
     .filter(Boolean);
 }
 
+function escapeRegex(value) {
+  return String(value || '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function buildDateQuery(startValue, endValue) {
+  const range = {};
+  if (startValue) {
+    const startDate = new Date(startValue);
+    if (!Number.isNaN(startDate.getTime())) {
+      range.$gte = startDate;
+    }
+  }
+  if (endValue) {
+    const endDate = new Date(endValue);
+    if (!Number.isNaN(endDate.getTime())) {
+      range.$lte = endDate;
+    }
+  }
+  return Object.keys(range).length ? range : null;
+}
+
 function buildIceServers() {
   const servers = [];
   const stunList = parseList(process.env.STUN_URLS);
@@ -321,6 +342,56 @@ io.on('connection', (socket) => {
       candidate: payload.candidate,
       classId: payload.classId
     });
+  });
+
+  // ── Chat relay ────────────────────────────────────────────
+  socket.on('teacher-chat', (payload = {}) => {
+    const classId = String(payload.classId || '').trim();
+    const text    = String(payload.text    || '').trim();
+    if (!classId || !text) return;
+    // Broadcast to all students in the room
+    socket.to(roomKey(classId)).emit('teacher-chat', {
+      classId,
+      name: String(payload.teacherId || 'Teacher').trim(),
+      text
+    });
+  });
+
+  socket.on('student-chat', (payload = {}) => {
+    const classId = String(payload.classId || '').trim();
+    const text    = String(payload.text    || '').trim();
+    if (!classId || !text) return;
+    const live = liveRooms.get(classId);
+    // Send to teacher + broadcast to room
+    if (live) {
+      io.to(live.socketId).emit('student-chat', {
+        classId,
+        studentId: socket.id,
+        name: String(payload.name || 'Student').trim(),
+        text
+      });
+    }
+    // Also send to all students so everyone sees the message
+    socket.to(roomKey(classId)).emit('student-chat', {
+      classId,
+      studentId: socket.id,
+      name: String(payload.name || 'Student').trim(),
+      text
+    });
+  });
+
+  // ── Hand raise ────────────────────────────────────────────
+  socket.on('student-hand', (payload = {}) => {
+    const classId = String(payload.classId || '').trim();
+    if (!classId) return;
+    const live = liveRooms.get(classId);
+    if (live) {
+      io.to(live.socketId).emit('student-hand', {
+        classId,
+        studentId: socket.id,
+        name: String(payload.name || 'Student').trim()
+      });
+    }
   });
 
   socket.on('disconnect', () => {
@@ -734,6 +805,52 @@ app.post('/submit-assignment', async (req, res) => {
   await registerStudent(studentName);
 
   return res.status(201).json({ submission: { assignmentId, studentName, answer } });
+});
+
+app.get('/quiz-submissions', async (req, res) => {
+  const studentName = String(req.query.studentName || '').trim();
+  const start = String(req.query.start || '').trim();
+  const end = String(req.query.end || '').trim();
+  const limit = Math.min(Math.max(Number(req.query.limit) || 200, 1), 1000);
+
+  const query = {};
+  if (studentName) {
+    query.studentName = new RegExp(escapeRegex(studentName), 'i');
+  }
+
+  const dateQuery = buildDateQuery(start, end);
+  if (dateQuery) {
+    query.submittedAt = dateQuery;
+  }
+
+  const submissions = await QuizSubmission.find(query)
+    .sort({ submittedAt: -1 })
+    .limit(limit);
+
+  return res.json({ submissions: mapList(submissions) });
+});
+
+app.get('/assignment-submissions', async (req, res) => {
+  const studentName = String(req.query.studentName || '').trim();
+  const start = String(req.query.start || '').trim();
+  const end = String(req.query.end || '').trim();
+  const limit = Math.min(Math.max(Number(req.query.limit) || 200, 1), 1000);
+
+  const query = {};
+  if (studentName) {
+    query.studentName = new RegExp(escapeRegex(studentName), 'i');
+  }
+
+  const dateQuery = buildDateQuery(start, end);
+  if (dateQuery) {
+    query.submittedAt = dateQuery;
+  }
+
+  const submissions = await AssignmentSubmission.find(query)
+    .sort({ submittedAt: -1 })
+    .limit(limit);
+
+  return res.json({ submissions: mapList(submissions) });
 });
 
 app.get('/teachers', async (req, res) => {
