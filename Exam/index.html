@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&family=Montserrat&family=Nunito&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>AcharyaKul Exam Window</title>
+</head>
+
+<body>
+    <div class="container">
+        <main>
+            <header class="header">
+                <h1>AcharyaKul's Proctored Examination</h1>
+                <div class="timer">00<span class="time-colon">:</span>00<span class="time-colon">:</span>00</div>
+            </header>
+            <div class="questionArea">
+                <div class="questions">
+                    <label class="questionLoading" id="questionLoading"> Question Loading....</label>
+                    <div id="answerArea" class="answerArea">
+                        <div class="optionLoading answerPlaceholder">Loading answer area...</div>
+                    </div>
+                </div>
+                <button class="navButton" id="prev">Previous</button>
+                <button class="navButton" id="next">Next</button>
+            </div>
+            <footer class="footer">
+                <p>&copy; 2026 AcharyaKul Exam Window. All rights reserved.</p>
+            </footer>
+        </main>
+        <aside class="sidepanel">
+            <h2 class="sideHeader">AcharyaKul</h2>
+            <img src="" class="profile loading"><br>
+            <label for="username" class="username">Username:</label>
+            <div id="username" class="usernameLoading">Loading...</div><br>
+            <div id="NoOfQuestions">
+                <p>Questions</p>
+                <div id="questionsGrid">
+                    <div class="qBox loading"></div>
+                    <div class="qBox loading"></div>
+                    <div class="qBox loading"></div>
+                    <div class="qBox loading"></div>
+                    <div class="qBox loading"></div>
+                    <div class="qBox loading"></div>
+                    <div class="qBox loading"></div>
+                    <div class="qBox loading"></div>
+                    <div class="qBox loading"></div>
+                    <div class="qBox loading"></div>
+                </div>
+            </div>
+            <button id="endExam" class="endExam">Finish Exam</button>
+        </aside>
+
+        <div class="popup-overlay" id="popupOverlayFinish">
+            <div class="confirmation-popup-finish">
+                <h2>Confirm Finish Exam</h2>
+                <p>Are you sure you want to finish the exam?</p>
+                <div class="popup-buttons">
+                    <button id="confirmFinish" class="confirm-button">Yes, Finish</button>
+                    <button id="cancelFinish" class="cancel-button">No, Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+    <script src="/shared/auth-client.js"></script>
+    <script src="script.js" defer></script>
+</body>
+
+</html>

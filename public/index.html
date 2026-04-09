@@ -3,58 +3,109 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AcharyaKul</title>
+    <title>AcharyaKul Pehredaar</title>
+    <meta
+      name="description"
+      content="Secure sign in and account access for AcharyaKul."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700;900&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/shared/auth.css" />
     <style>
-      :root {
-        --bg-1: #f9f6f0;
-        --bg-2: #e6f4ff;
-        --accent: #1a937b;
-        --text: #1f2a35;
-        --muted: #5f6c7b;
-      }
-      * { box-sizing: border-box; margin: 0; padding: 0; }
       body {
-        font-family: "Trebuchet MS", "Gill Sans", "Candara", sans-serif;
-        background: radial-gradient(circle at top left, rgba(26, 147, 123, 0.08), transparent 55%),
-          radial-gradient(circle at 15% 80%, rgba(244, 162, 97, 0.12), transparent 55%),
-          linear-gradient(130deg, var(--bg-1), var(--bg-2));
-        color: var(--text);
-        min-height: 100vh;
-        display: grid;
-        place-items: center;
-      }
-      .card {
-        background: #ffffff;
-        padding: 28px;
-        border-radius: 18px;
-        box-shadow: 0 18px 40px rgba(20, 35, 55, 0.12);
-        width: min(420px, 90vw);
-        display: grid;
-        gap: 14px;
-      }
-      h1 { font-size: 24px; }
-      p { color: var(--muted); font-size: 14px; }
-      .links { display: grid; gap: 10px; }
-      a {
-        text-decoration: none;
-        padding: 12px 16px;
-        border-radius: 12px;
-        background: rgba(26, 147, 123, 0.1);
-        color: var(--text);
-        font-weight: 600;
-        border: 1px solid rgba(26, 147, 123, 0.2);
+        margin: 0;
+        font-family: "Manrope", sans-serif;
+        color: var(--auth-text);
       }
     </style>
   </head>
-  <body>
-    <div class="card">
-      <h1>AcharyaKul Local Portals</h1>
-      <p>Select a workspace to continue.</p>
-      <div class="links">
-        <a href="/student/">Student Portal</a>
-        <a href="/teacher/">Teacher Portal</a>
-        <a href="/admin/">Admin Portal</a>
-      </div>
-    </div>
+  <body class="auth-page">
+    <main class="auth-shell">
+      <section class="auth-card">
+        <div class="auth-hero">
+          <div class="auth-kicker">AcharyaKul Pehredaar</div>
+          <div class="auth-title">Secure access for every AcharyaKul learner and educator.</div>
+          <div class="auth-copy">
+            Sign in to continue to your AcharyaKul workspace, manage learning, and stay connected.
+          </div>
+          <div class="auth-role-list">
+            <div class="auth-role-item">
+              <strong>Students</strong>
+              Access classes, exams, assignments, and your learning dashboard.
+            </div>
+            <div class="auth-role-item">
+              <strong>Teachers</strong>
+              Manage classes, track progress, and guide students with confidence.
+            </div>
+            <div class="auth-role-item">
+              <strong>Admins</strong>
+              Oversee platform activity and support the AcharyaKul community.
+            </div>
+          </div>
+        </div>
+
+        <div class="auth-panel">
+          <div class="auth-head">
+            <h1>Welcome to AcharyaKul Pehredaar</h1>
+            <p>Sign in or create your account to continue.</p>
+          </div>
+
+          <div class="auth-tabs">
+            <button class="auth-tab active" id="signinTab" type="button">Sign In</button>
+            <button class="auth-tab" id="signupTab" type="button">Create Account</button>
+          </div>
+
+          <form class="auth-form" id="signinForm">
+            <div>
+              <label for="signinEmail">Email</label>
+              <input id="signinEmail" type="email" autocomplete="email" required />
+            </div>
+            <div>
+              <label for="signinPassword">Password</label>
+              <input id="signinPassword" type="password" autocomplete="current-password" required />
+            </div>
+            <button type="submit">Sign In</button>
+          </form>
+
+          <form class="auth-form auth-hidden" id="signupForm">
+            <div>
+              <label for="signupName">Display Name</label>
+              <input id="signupName" type="text" autocomplete="name" required />
+            </div>
+            <div>
+              <label for="signupEmail">Email</label>
+              <input id="signupEmail" type="email" autocomplete="email" required />
+            </div>
+            <div>
+              <label for="signupPassword">Password</label>
+              <input id="signupPassword" type="password" autocomplete="new-password" required />
+            </div>
+            <div>
+              <label for="signupRole">Create account for</label>
+              <select id="signupRole">
+                <option value="student">Student</option>
+                <option value="teacher">Teacher</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+            <button type="submit">Create Account</button>
+          </form>
+
+          <div class="auth-status" id="authStatus"></div>
+          <div class="auth-note" id="authNote">
+            Use your AcharyaKul account credentials to continue securely.
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+    <script src="/shared/auth-client.js"></script>
+    <script src="/auth-page.js"></script>
   </body>
 </html>
