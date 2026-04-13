@@ -1,4 +1,3 @@
-
 const tabs = Array.from(document.querySelectorAll('.side-btn'));
 const panels = Array.from(document.querySelectorAll('.panel'));
 const refreshAdmin = document.getElementById('refreshAdmin');
@@ -665,7 +664,7 @@ function renderClasses() {
     const card = document.createElement('div');
     card.className = 'list-item';
     const upcoming = Array.isArray(item.upcomingSessions) ? item.upcomingSessions : [];
-    const upcomingPreview = upcoming.slice(0, 2).join(' • ');
+    const upcomingPreview = upcoming.slice(0, 2).join(' ï¿½ ');
     const upcomingMore = upcoming.length > 2 ? ` +${upcoming.length - 2} more` : '';
     const nextSession = item.nextSession || (upcoming[0] || 'TBA');
     const schedule = item.scheduleNotes || 'Schedule not published.';
