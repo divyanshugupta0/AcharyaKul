@@ -1,15 +1,20 @@
-<!doctype html>
+]<!doctype html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AcharyaKul – Student Portal</title>
-  <meta name="description" content="AcharyaKul Student Portal – Join live classes, take quizzes, and submit assignments." />
+  <meta name="description"
+    content="AcharyaKul Student Portal – Join live classes, take exams, and submit assignments." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700;900&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700;900&family=Manrope:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap"
+    rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -19,11 +24,10 @@
   <div class="gate" id="studentGate">
     <div class="gate-card">
       <div class="gate-logo">AK</div>
-      <h2>Welcome, Learner</h2>
-      <p>Enter your name to start learning.</p>
-      <input id="studentNameInput" type="text" placeholder="Your full name" autofocus />
-      <button id="studentNameBtn" type="button">Enter Portal</button>
-      <div class="gate-hint">Your name is used for quizzes and assignments.</div>
+      <h2>Session Required</h2>
+      <p>Use the shared AcharyaKul access page to sign in or create your account.</p>
+      <button id="goToAccessPage" type="button">Go To Login / Signup</button>
+      <div class="gate-hint">Student access, teacher access, and admin access now start from one page.</div>
     </div>
   </div>
 
@@ -47,14 +51,14 @@
         <button class="side-btn" data-tab="live">
           <span class="material-symbols-outlined">live_tv</span> Live Class
         </button>
-        <button class="side-btn" data-tab="quiz">
-          <span class="material-symbols-outlined">quiz</span> Quizzes
-        </button>
         <button class="side-btn" data-tab="assignment">
           <span class="material-symbols-outlined">assignment</span> Assignments
         </button>
         <button class="side-btn" data-tab="progress">
           <span class="material-symbols-outlined">insights</span> Progress
+        </button>
+        <button class="side-btn" data-tab="exam">
+          <span class="material-symbols-outlined">assignment_late</span> Exam
         </button>
         <button class="side-btn" data-tab="ai">
           <span class="material-symbols-outlined">auto_awesome</span> AI Mentor
@@ -72,7 +76,7 @@
         </button>
         <div class="side-links">
           <button class="link-btn" id="changeStudent" type="button">
-            <span class="material-symbols-outlined">swap_horiz</span> Change Name
+            <span class="material-symbols-outlined">logout</span> Logout
           </button>
         </div>
       </div>
@@ -97,12 +101,12 @@
             <header class="topbar">
               <div class="topbar-left">
                 <div class="page-title">Student Dashboard</div>
-                <div class="page-subtitle">Join live sessions, practice quizzes, and submit assignments.</div>
+                <div class="page-subtitle">Join live sessions, practice Exams, and submit assignments.</div>
                 <nav class="top-nav">
                   <button class="top-link active" data-tab="dashboard">Dashboard</button>
                   <button class="top-link" data-tab="live">Live Class</button>
-                  <button class="top-link" data-tab="quiz">Quizzes</button>
                   <button class="top-link" data-tab="assignment">Assignments</button>
+                  <button class="top-link" data-tab="exam">Exam</button>
                   <button class="top-link" data-tab="progress">Progress</button>
                 </nav>
               </div>
@@ -123,11 +127,6 @@
                 <div class="hero-title">My Classes</div>
                 <div class="hero-value" id="heroClassCount">0</div>
                 <div class="hero-sub">Enrolled batches</div>
-              </div>
-              <div class="hero-card accent">
-                <div class="hero-title">Quizzes</div>
-                <div class="hero-value" id="heroQuizCount">0</div>
-                <div class="hero-sub">Available to attempt</div>
               </div>
               <div class="hero-card">
                 <div class="hero-title">Assignments</div>
@@ -178,10 +177,20 @@
               <div class="section-header">
                 <div>
                   <div class="section-title">Your Classes</div>
-                  <div class="section-subtitle">Select a class to load quizzes and assignments.</div>
+                  <div class="section-subtitle">Select a class to load exams and assignments.</div>
                 </div>
               </div>
               <div class="class-gallery" id="classGallery"></div>
+            </section>
+
+            <section class="hub-section">
+              <div class="section-header">
+                <div>
+                  <div class="section-title">Upcoming Classes</div>
+                  <div class="section-subtitle">Scheduled live sessions and waiting room availability.</div>
+                </div>
+              </div>
+              <div class="upcoming-class-list" id="upcomingClassList"></div>
             </section>
           </div>
           <!-- hidden select for class state -->
@@ -196,9 +205,11 @@
             <div class="panel-header">
               <div>
                 <div class="panel-title" style="color:var(--studio-text)">Live Class Lobby</div>
-                <div class="panel-subtitle" style="color:var(--studio-muted)">Select a class and join when you're ready.</div>
+                <div class="panel-subtitle" style="color:var(--studio-muted)">Select a class and join when you're ready.
+                </div>
               </div>
-              <button class="ghost-btn" id="refreshLobbyBtn" type="button" style="color:var(--studio-text);border-color:rgba(255,255,255,.15)">
+              <button class="ghost-btn" id="refreshLobbyBtn" type="button"
+                style="color:var(--studio-text);border-color:rgba(255,255,255,.15)">
                 <span class="material-symbols-outlined">refresh</span> Refresh
               </button>
             </div>
@@ -238,7 +249,8 @@
                   <video id="liveVideo" autoplay playsinline></video>
                   <div class="canvas-placeholder" id="livePlaceholder">
                     <span class="material-symbols-outlined ph-icon">live_tv</span>
-                    <span>Waiting for teacher to start streaming…</span>
+                    <strong id="livePlaceholderTitle">Waiting for teacher to start streaming...</strong>
+                    <span id="livePlaceholderText">Join a scheduled class and stay here until the live stream begins.</span>
                   </div>
                 </div>
               </div>
@@ -284,42 +296,7 @@
           </div>
         </section>
 
-        <!-- ══ QUIZZES ═════════════════════════════════════════ -->
-        <section class="panel" id="tab-quiz">
-          <div class="panel-header">
-            <div>
-              <div class="panel-title">Quiz Center</div>
-              <div class="panel-subtitle">Select a quiz from the list, answer the questions, and submit.</div>
-            </div>
-            <div class="panel-actions">
-              <input id="quizSearch" type="text" placeholder="Search quizzes…" style="max-width:200px" />
-              <button class="ghost-btn" id="refreshQuizzesBtn" type="button">
-                <span class="material-symbols-outlined">refresh</span> Refresh
-              </button>
-            </div>
-          </div>
-          <div class="quiz-grid">
-            <div class="quiz-sidebar">
-              <div class="sidebar-title">Available Quizzes</div>
-              <div class="vertical-list" id="quizList">
-                <div class="status">Select a class first.</div>
-              </div>
-            </div>
-            <div class="quiz-main">
-              <div class="quiz-active-header">
-                <h3 id="activeQuizTitle">Select a quiz</h3>
-              </div>
-              <div class="question-stack" id="quizQuestions">
-                <div class="status">Choose a quiz from the sidebar to begin.</div>
-              </div>
-              <div class="quiz-actions hidden" id="quizActions">
-                <button id="submitQuizBtn" type="button">Submit Answer</button>
-                <span class="status" id="quizStatus"></span>
-              </div>
-            </div>
-          </div>
-        </section>
-
+        
         <!-- ══ ASSIGNMENTS ═════════════════════════════════════ -->
         <section class="panel" id="tab-assignment">
           <div class="panel-header">
@@ -381,7 +358,7 @@
             <div class="progress-card">
               <span class="material-symbols-outlined progress-icon">quiz</span>
               <div class="progress-value" id="progressQuizCount">0</div>
-              <div class="progress-label">Quizzes Taken</div>
+              <div class="progress-label">Exams Taken</div>
             </div>
             <div class="progress-card">
               <span class="material-symbols-outlined progress-icon">percent</span>
@@ -411,6 +388,21 @@
               <div class="history-list" id="assignmentHistoryList">
                 <div class="status">No assignments submitted yet.</div>
               </div>
+            </div>
+          </div>
+        </section>
+        <!--===========================Exam Section============================-->
+        <section>
+          <div class="panel" id="tab-exam">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">Exam Window</div>
+                <div class="panel-subtitle">Your proctored exam will appear here. Please do not refresh or navigate away.</div>
+              </div>
+            </div>
+            <div class="exam-list" id="examList">
+              <div class="status" id="exam-status">Loading exams...</div>
+              <!-- Exam content will be dynamically injected here when the student starts an exam session -->
             </div>
           </div>
         </section>
@@ -448,6 +440,9 @@
   <div class="toast-area" id="toastArea"></div>
 
   <script src="/socket.io/socket.io.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="/shared/auth-client.js"></script>
   <script src="script.js"></script>
 </body>
 
