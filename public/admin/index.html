@@ -77,7 +77,7 @@
               <span class="material-symbols-outlined">help</span>
               Help Center
             </button>
-            <button class="link-btn danger" type="button">
+            <button class="link-btn danger" type="button" id="logoutBtn">
               <span class="material-symbols-outlined">logout</span>
               Logout
             </button>
@@ -195,6 +195,27 @@
                 <div class="panel-title">Teachers</div>
                 <div class="panel-subtitle">Active teacher accounts.</div>
               </div>
+            </div>
+            <div class="panel-block">
+              <div class="panel-block-header">
+                <div>
+                  <div class="panel-title">Create Staff Account</div>
+                  <div class="panel-subtitle">Create teacher or admin accounts directly from the admin portal.</div>
+                </div>
+              </div>
+              <form class="panel-actions" id="staffAccountForm">
+                <div class="filters">
+                  <input class="search-input" id="staffDisplayName" placeholder="Display name" />
+                  <input class="search-input" id="staffEmail" type="email" placeholder="Email" />
+                  <input class="search-input" id="staffPassword" type="password" placeholder="Temporary or permanent password" />
+                  <select class="select" id="staffRole">
+                    <option value="teacher">Teacher</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                </div>
+                <button class="ghost-btn" type="submit" id="staffAccountSubmit">Create or Update</button>
+              </form>
+              <div class="list-meta" id="staffAccountStatus">Ready to create staff accounts.</div>
             </div>
             <div class="panel-actions">
               <div class="filters">
@@ -386,6 +407,9 @@
       </main>
     </div>
 
-    <script src="script.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+    <script src="/shared/auth-client.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>
