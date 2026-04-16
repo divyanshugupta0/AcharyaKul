@@ -1,583 +1,872 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AcharyaKul Teacher</title>
-    <meta name="description" content="AcharyaKul Teacher Command Center – live classes, quizzes, assignments." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700;900&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body data-role="teacher">
 
-    <!-- ── Login gate ─────────────────────────────────────────────── -->
-    <div class="gate" id="teacherGate">
-      <div class="gate-card">
-        <div class="gate-logo">AK</div>
-        <h2>AcharyaKul Teacher Access</h2>
-        <p>Enter your Teacher ID to open your command center.</p>
-        <input id="teacherIdInput" type="text" placeholder="Enter your Teacher ID" autocomplete="off" />
-        <button id="teacherIdBtn">Enter Dashboard</button>
-        <p class="gate-hint">Use your unique ID to keep your classes private.</p>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AcharyaKul Teacher</title>
+  <meta name="description" content="AcharyaKul Teacher Command Center – live classes, quizzes, assignments." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700;900&family=Manrope:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body data-role="teacher">
+
+  <!-- ── Login gate ─────────────────────────────────────────────── -->
+  <div class="gate" id="teacherGate">
+    <div class="gate-card">
+      <div class="gate-logo">AK</div>
+      <h2>Teacher Session Required</h2>
+      <p>Your dashboard now uses the shared AcharyaKul access page.</p>
+      <button id="goToAccessPage" type="button">Go To Login / Signup</button>
+      <p class="gate-hint">Sign in once and we will route you back according to your role.</p>
+    </div>
+  </div>
+
+  <!-- ── App shell ──────────────────────────────────────────────── -->
+  <div class="layout" id="teacherShell">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="logo">AK</div>
+        <div>
+          <div class="title">AcharyaKul</div>
+          <div class="tagline">The Digital Lyceum</div>
+          <div class="subtitle">Plan · Teach · Measure</div>
+        </div>
       </div>
+
+      <nav class="side-nav">
+        <button class="side-btn active" data-tab="overview">
+          <span class="material-symbols-outlined">dashboard</span>
+          <span>Overview</span>
+        </button>
+        <button class="side-btn" data-tab="schedule">
+          <span class="material-symbols-outlined">calendar_month</span>
+          <span>Schedule</span>
+        </button>
+        <button class="side-btn" data-tab="studio">
+          <span class="material-symbols-outlined">videocam</span>
+          <span>Live Studio</span>
+        </button>
+        <button class="side-btn" data-tab="create-quiz">
+          <span class="material-symbols-outlined">quiz</span>
+          <span>Quiz Exam</span>
+        </button>
+        <button class="side-btn" data-tab="create-assignment">
+          <span class="material-symbols-outlined">assignment</span>
+          <span>Create Assignment</span>
+        </button>
+        <button class="side-btn" data-tab="library">
+          <span class="material-symbols-outlined">local_library</span>
+          <span>Library</span>
+        </button>
+        <button class="side-btn" data-tab="submissions">
+          <span class="material-symbols-outlined">history_edu</span>
+          <span>Submissions</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="primary-btn" type="button" data-jump="studio">
+          <span class="material-symbols-outlined">video_call</span>
+          Go Live
+        </button>
+        <div class="side-links">
+          <button class="link-btn" type="button">
+            <span class="material-symbols-outlined">help</span>
+            Help Center
+          </button>
+          <button class="link-btn danger" type="button" id="logoutBtn">
+            <span class="material-symbols-outlined">logout</span>
+            Logout
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── Mobile topbar ──────────────────────────────────────── -->
+    <div class="mobile-topbar">
+      <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+      <div class="mobile-brand">AcharyaKul</div>
+      <span class="status-pill live-pill" id="mobileLiveLabel">⬤ Offline</span>
     </div>
 
-    <!-- ── App shell ──────────────────────────────────────────────── -->
-    <div class="layout" id="teacherShell">
+    <!-- Main content -->
+    <main class="main" id="mainArea">
+      <div class="app">
 
-      <!-- Sidebar -->
-      <aside class="sidebar" id="sidebar">
-        <div class="brand">
-          <div class="logo">AK</div>
-          <div>
-            <div class="title">AcharyaKul</div>
-            <div class="tagline">The Digital Lyceum</div>
-            <div class="subtitle">Plan · Teach · Measure</div>
-          </div>
-        </div>
-
-        <nav class="side-nav">
-          <button class="side-btn active" data-tab="overview">
-            <span class="material-symbols-outlined">dashboard</span>
-            <span>Overview</span>
-          </button>
-          <button class="side-btn" data-tab="studio">
-            <span class="material-symbols-outlined">videocam</span>
-            <span>Live Studio</span>
-          </button>
-          <button class="side-btn" data-tab="create">
-            <span class="material-symbols-outlined">edit_square</span>
-            <span>Create</span>
-          </button>
-          <button class="side-btn" data-tab="library">
-            <span class="material-symbols-outlined">local_library</span>
-            <span>Library</span>
-          </button>
-          <button class="side-btn" data-tab="submissions">
-            <span class="material-symbols-outlined">history_edu</span>
-            <span>Submissions</span>
-          </button>
-        </nav>
-
-        <div class="side-meta">
-          <span class="status-pill" id="teacherIdLabel">Teacher ID: --</span>
-          <span class="status-pill live-pill" id="teacherLiveLabel">⬤ Offline</span>
-          <button class="link-btn" id="changeTeacher">Change ID</button>
-        </div>
-
-        <div class="sidebar-footer">
-          <button class="primary-btn" type="button" data-jump="studio">
-            <span class="material-symbols-outlined">video_call</span>
-            Go Live
-          </button>
-          <div class="side-links">
-            <button class="link-btn" type="button">
-              <span class="material-symbols-outlined">help</span>
-              Help Center
-            </button>
-            <button class="link-btn danger" type="button" id="logoutBtn">
-              <span class="material-symbols-outlined">logout</span>
-              Logout
-            </button>
-          </div>
-        </div>
-      </aside>
-
-      <!-- ── Mobile topbar ──────────────────────────────────────── -->
-      <div class="mobile-topbar">
-        <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
-          <span class="material-symbols-outlined">menu</span>
-        </button>
-        <div class="mobile-brand">AcharyaKul</div>
-        <span class="status-pill live-pill" id="mobileLiveLabel">⬤ Offline</span>
-      </div>
-
-      <!-- Main content -->
-      <main class="main" id="mainArea">
-        <div class="app">
-
-          <!-- ══ OVERVIEW ════════════════════════════════════════ -->
-          <section class="panel active" id="tab-overview">
-            <div class="dashboard-stack">
-              <header class="topbar">
-                <div class="topbar-left">
-                  <div class="page-title">Teacher Command Center</div>
-                  <div class="page-subtitle">Orchestrate live classes, content, and student progress.</div>
-                  <nav class="top-nav">
-                    <button class="top-link active" data-tab="overview">Overview</button>
-                    <button class="top-link" data-tab="studio">Live Studio</button>
-                    <button class="top-link" data-tab="create">Create</button>
-                    <button class="top-link" data-tab="library">Library</button>
-                    <button class="top-link" data-tab="submissions">Submissions</button>
-                  </nav>
+        <!-- ══ OVERVIEW ════════════════════════════════════════ -->
+        <section class="panel active" id="tab-overview">
+          <div class="dashboard-stack">
+            <header class="topbar">
+              <div class="topbar-left">
+                <div class="page-title">Teacher Command Center</div>
+                <div class="page-subtitle">Orchestrate live classes, content, and student progress.</div>
+                <nav class="top-nav">
+                  <button class="top-link active" data-tab="overview">Overview</button>
+                  <button class="top-link" data-tab="schedule">Schedule</button>
+                  <button class="top-link" data-tab="studio">Live Studio</button>
+                  <button class="top-link" data-tab="create-class">Create Class</button>
+                  <button class="top-link" data-tab="create-quiz">Quiz Exam</button>
+                  <button class="top-link" data-tab="create-assignment">Create Assignment</button>
+                  <button class="top-link" data-tab="library">Library</button>
+                  <button class="top-link" data-tab="submissions">Submissions</button>
+                </nav>
+              </div>
+              <div class="topbar-right">
+                <label class="topbar-search">
+                  <span class="material-symbols-outlined">search</span>
+                  <input type="text" placeholder="Search learners, content…" />
+                </label>
+                <div class="topbar-icons">
+                  <button class="icon-btn" type="button" aria-label="Notifications">
+                    <span class="material-symbols-outlined">notifications</span>
+                  </button>
+                  <button class="icon-btn" type="button" aria-label="Analytics">
+                    <span class="material-symbols-outlined">monitoring</span>
+                  </button>
                 </div>
-                <div class="topbar-right">
-                  <label class="topbar-search">
-                    <span class="material-symbols-outlined">search</span>
-                    <input type="text" placeholder="Search learners, content…" />
-                  </label>
-                  <div class="topbar-icons">
-                    <button class="icon-btn" type="button" aria-label="Notifications">
-                      <span class="material-symbols-outlined">notifications</span>
-                    </button>
-                    <button class="icon-btn" type="button" aria-label="Analytics">
-                      <span class="material-symbols-outlined">monitoring</span>
-                    </button>
+                <div class="user-chip">
+                  <div class="user-avatar" id="topbarAvatar">AK</div>
+                  <div>
+                    <div class="user-name" id="topbarName">Acharya</div>
+                    <div class="user-role">Lead Mentor</div>
                   </div>
-                  <div class="user-chip">
-                    <div class="user-avatar" id="topbarAvatar">AK</div>
-                    <div>
-                      <div class="user-name" id="topbarName">Acharya</div>
-                      <div class="user-role">Lead Mentor</div>
-                    </div>
-                  </div>
-                  <span class="status-pill" id="lastUpdated">Last updated: --</span>
                 </div>
-              </header>
+                <span class="status-pill" id="lastUpdated">Last updated: --</span>
+              </div>
+            </header>
 
-              <section class="hero-intro">
-                <div>
-                  <div class="hero-kicker">Welcome Back</div>
-                  <div class="hero-heading">Venerable Acharya, your learners are ready.</div>
-                  <div class="hero-note">Stay ahead with live insights and streamlined content creation.</div>
-                </div>
-              </section>
-
-              <section class="hero-strip">
-                <div class="hero-card">
-                  <div class="hero-title">Classes</div>
-                  <div class="hero-value" id="heroClassCount">0</div>
-                  <div class="hero-sub">Active subjects</div>
-                </div>
-                <div class="hero-card">
-                  <div class="hero-title">Quizzes</div>
-                  <div class="hero-value" id="heroQuizCount">0</div>
-                  <div class="hero-sub">Published questions</div>
-                </div>
-                <div class="hero-card">
-                  <div class="hero-title">Assignments</div>
-                  <div class="hero-value" id="heroAssignmentCount">0</div>
-                  <div class="hero-sub">Open submissions</div>
-                </div>
-                <div class="hero-card">
-                  <div class="hero-title">Quiz Submissions</div>
-                  <div class="hero-value" id="heroQuizSubmissions">0</div>
-                  <div class="hero-sub">Attempts submitted</div>
-                </div>
-                <div class="hero-card">
-                  <div class="hero-title">Assignment Subs</div>
-                  <div class="hero-value" id="heroAssignmentSubmissions">0</div>
-                  <div class="hero-sub">Responses received</div>
-                </div>
-                <div class="hero-card">
-                  <div class="hero-title">Avg Quiz Score</div>
-                  <div class="hero-value" id="heroAvgScore">0%</div>
-                  <div class="hero-sub">Across your quizzes</div>
-                </div>
-                <div class="hero-card">
-                  <div class="hero-title">Active Learners</div>
-                  <div class="hero-value" id="heroActiveLearners">0</div>
-                  <div class="hero-sub">Unique students</div>
-                </div>
-              </section>
-            </div>
-
-            <div class="panel-header">
+            <section class="hero-intro">
               <div>
-                <div class="panel-title">Overview</div>
-                <div class="panel-subtitle">A snapshot of your classes and learner activity.</div>
+                <div class="hero-kicker">Welcome Back</div>
+                <div class="hero-heading">Venerable Acharya, your learners are ready.</div>
+                <div class="hero-note">Stay ahead with live insights and streamlined content creation.</div>
+              </div>
+            </section>
+
+            <section class="hero-strip">
+              <div class="hero-card">
+                <div class="hero-title">Classes</div>
+                <div class="hero-value" id="heroClassCount">0</div>
+                <div class="hero-sub">Active subjects</div>
+              </div>
+              <div class="hero-card">
+                <div class="hero-title">Quiz Exams</div>
+                <div class="hero-value" id="heroQuizCount">0</div>
+                <div class="hero-sub">Published questions</div>
+              </div>
+              <div class="hero-card">
+                <div class="hero-title">Assignments</div>
+                <div class="hero-value" id="heroAssignmentCount">0</div>
+                <div class="hero-sub">Open submissions</div>
+              </div>
+              <div class="hero-card">
+                <div class="hero-title">Quiz Submissions</div>
+                <div class="hero-value" id="heroQuizSubmissions">0</div>
+                <div class="hero-sub">Attempts submitted</div>
+              </div>
+              <div class="hero-card">
+                <div class="hero-title">Assignment Subs</div>
+                <div class="hero-value" id="heroAssignmentSubmissions">0</div>
+                <div class="hero-sub">Responses received</div>
+              </div>
+              <div class="hero-card">
+                <div class="hero-title">Avg Quiz Score</div>
+                <div class="hero-value" id="heroAvgScore">0%</div>
+                <div class="hero-sub">Across your quizzes</div>
+              </div>
+              <div class="hero-card">
+                <div class="hero-title">Active Learners</div>
+                <div class="hero-value" id="heroActiveLearners">0</div>
+                <div class="hero-sub">Unique students</div>
+              </div>
+            </section>
+          </div>
+
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">Overview</div>
+              <div class="panel-subtitle">A snapshot of your classes and learner activity.</div>
+            </div>
+          </div>
+
+          <div class="overview-grid">
+            <div class="overview-card">
+              <div class="card-title">Class Snapshot</div>
+              <div class="snapshot-list">
+                <div class="snapshot-row">
+                  <span class="snapshot-label">Selected class</span>
+                  <span class="snapshot-value" id="snapshotClass">--</span>
+                </div>
+                <div class="snapshot-row">
+                  <span class="snapshot-label">Next session</span>
+                  <span class="snapshot-value" id="snapshotNext">--</span>
+                </div>
+                <div class="snapshot-row">
+                  <span class="snapshot-label">Mode</span>
+                  <span class="snapshot-value" id="snapshotMode">--</span>
+                </div>
+                <div class="snapshot-row">
+                  <span class="snapshot-label">Schedule notes</span>
+                  <span class="snapshot-value" id="snapshotSchedule">--</span>
+                </div>
+                <div class="snapshot-row">
+                  <span class="snapshot-label">Learners engaged</span>
+                  <span class="snapshot-value" id="snapshotStudents">--</span>
+                </div>
+              </div>
+              <div class="snapshot-actions">
+                <button class="ghost-btn" data-jump="studio">Go Live</button>
+                <button class="ghost-btn" data-jump="create">Create Content</button>
+                <button class="ghost-btn" data-jump="submissions">Review Work</button>
               </div>
             </div>
+            <div class="overview-card">
+              <div class="card-title">Recent Activity</div>
+              <div class="activity-list" id="activityList"></div>
+            </div>
+            <div class="overview-card">
+              <div class="card-title">Next Steps</div>
+              <div class="task-list" id="nextSteps"></div>
+            </div>
+          </div>
+        </section>
 
-            <div class="overview-grid">
-              <div class="overview-card">
-                <div class="card-title">Class Snapshot</div>
-                <div class="snapshot-list">
-                  <div class="snapshot-row">
-                    <span class="snapshot-label">Selected class</span>
-                    <span class="snapshot-value" id="snapshotClass">--</span>
+        <!-- ══ SCHEDULE ══════════════════════════════════════════ -->
+        <section class="panel" id="tab-schedule">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">Schedule Live Classes</div>
+              <div class="panel-subtitle">Create time-based sessions with automatic start/end and notifications.</div>
+            </div>
+          </div>
+
+          <div class="schedule-layout">
+            <!-- Calendar View -->
+            <div class="schedule-calendar-card">
+              <div class="calendar-controls">
+                <button class="calendar-nav-btn" id="prevMonth">
+                  <span class="material-symbols-outlined">chevron_left</span>
+                </button>
+                <h3 id="calendarMonth">January 2024</h3>
+                <button class="calendar-nav-btn" id="nextMonth">
+                  <span class="material-symbols-outlined">chevron_right</span>
+                </button>
+              </div>
+              <div class="calendar-grid" id="calendarGrid"></div>
+            </div>
+
+            <!-- Schedule Form -->
+            <div class="schedule-form-card">
+              <h3>Create New Session</h3>
+              <form id="scheduleForm">
+                <label>Session Title</label>
+                <input type="text" id="sessionTitle" placeholder="e.g., Introduction to Algebra" required />
+
+                <div class="form-row">
+                  <div>
+                    <label>Date</label>
+                    <input type="date" id="sessionDate" required />
                   </div>
-                  <div class="snapshot-row">
-                    <span class="snapshot-label">Next session</span>
-                    <span class="snapshot-value" id="snapshotNext">--</span>
-                  </div>
-                  <div class="snapshot-row">
-                    <span class="snapshot-label">Mode</span>
-                    <span class="snapshot-value" id="snapshotMode">--</span>
-                  </div>
-                  <div class="snapshot-row">
-                    <span class="snapshot-label">Schedule notes</span>
-                    <span class="snapshot-value" id="snapshotSchedule">--</span>
-                  </div>
-                  <div class="snapshot-row">
-                    <span class="snapshot-label">Learners engaged</span>
-                    <span class="snapshot-value" id="snapshotStudents">--</span>
+                  <div>
+                    <label>Start Time</label>
+                    <input type="time" id="sessionTime" required />
                   </div>
                 </div>
-                <div class="snapshot-actions">
-                  <button class="ghost-btn" data-jump="studio">Go Live</button>
-                  <button class="ghost-btn" data-jump="create">Create Content</button>
-                  <button class="ghost-btn" data-jump="submissions">Review Work</button>
+
+                <div class="form-row">
+                  <div>
+                    <label>Duration</label>
+                    <select id="sessionDuration" required>
+                      <option value="30">30 min</option>
+                      <option value="45">45 min</option>
+                      <option value="60" selected>60 min</option>
+                      <option value="90">90 min</option>
+                      <option value="120">120 min</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label>Mode</label>
+                    <select id="sessionMode" required>
+                      <option value="human">Live Teacher</option>
+                      <option value="ai">AI Teaching</option>
+                    </select>
+                  </div>
+                </div>
+
+                <label>Description</label>
+                <textarea id="sessionDescription" rows="3" placeholder="What will be covered?"></textarea>
+
+                <label>Advanced Features</label>
+                <div class="checkbox-grid">
+                  <label class="checkbox-item">
+                    <input type="checkbox" id="enableRecording" />
+                    <span>Auto-record</span>
+                  </label>
+                  <label class="checkbox-item">
+                    <input type="checkbox" id="enableNotifications" checked />
+                    <span>Notify students</span>
+                  </label>
+                  <label class="checkbox-item">
+                    <input type="checkbox" id="enableWaitingRoom" />
+                    <span>Waiting room</span>
+                  </label>
+                  <label class="checkbox-item">
+                    <input type="checkbox" id="enableBreakout" />
+                    <span>Breakout rooms</span>
+                  </label>
+                </div>
+
+                <label>Max Participants</label>
+                <input type="number" id="maxParticipants" value="50" min="1" max="500" />
+
+                <label>Recurring</label>
+                <div class="radio-grid">
+                  <label class="radio-item">
+                    <input type="radio" name="recurring" value="none" checked />
+                    <span>One-time</span>
+                  </label>
+                  <label class="radio-item">
+                    <input type="radio" name="recurring" value="daily" />
+                    <span>Daily</span>
+                  </label>
+                  <label class="radio-item">
+                    <input type="radio" name="recurring" value="weekly" />
+                    <span>Weekly</span>
+                  </label>
+                  <label class="radio-item">
+                    <input type="radio" name="recurring" value="monthly" />
+                    <span>Monthly</span>
+                  </label>
+                </div>
+
+                <div class="form-actions">
+                  <button type="button" class="ghost-btn"
+                    onclick="document.getElementById('scheduleForm').reset()">Clear</button>
+                  <button type="submit">Schedule Session</button>
+                </div>
+                <span class="status" id="scheduleStatus">Ready</span>
+              </form>
+            </div>
+
+            <!-- Upcoming Sessions -->
+            <div class="schedule-sessions-card">
+              <h3>Upcoming Sessions</h3>
+              <div id="upcomingSessionsList" class="sessions-list"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══ LIVE STUDIO ══════════════════════════════════════ -->
+        <section class="panel studio-panel" id="tab-studio">
+          <div class="studio-backdrop" id="studioBackdrop"></div>
+          <div class="toast-area" id="toastArea"></div>
+          <div class="studio-pre-live" id="studioPreLive">
+            <div style="max-width: 900px; margin: 0 auto; width: 100%;">
+              <h2 class="studio-pre-live-title">Upcoming Live Classes</h2>
+              <p class="studio-pre-live-subtitle">Select a scheduled class to launch the Live Studio and begin
+                broadcasting.</p>
+              <div id="studioClassGrid"
+                style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; text-align: left;">
+                <div class="status">Loading classes...</div>
+              </div>
+              <button class="ghost-btn" id="exitPreLiveBtn" style="margin-top: 40px; display: none;">Return to
+                Studio</button>
+            </div>
+          </div>
+
+          <div class="studio-body hidden" id="studioBody">
+            <div class="studio-stage" id="studioStage" data-layout="focus">
+              <div class="stage-hud">
+                <div class="hud-left">
+                  <div class="session-pill">
+                    <span class="session-label">Session</span>
+                    <span class="session-title" id="studioClassName">-- No Class Selected --</span>
+                  </div>
+                  <div class="rec-badge hidden" id="recBadge"><span class="rec-dot"></span> REC</div>
+                </div>
+                <div class="hud-right">
+                  <div class="net-quality" id="netQuality"><span class="net-bar" id="nb1"></span><span class="net-bar"
+                      id="nb2"></span><span class="net-bar" id="nb3"></span><span class="net-bar" id="nb4"></span><span
+                      class="net-label" id="netLabel">Good</span></div>
+                  <div class="status-chip" id="liveStatus">Camera off</div>
+                  <div class="timer-label hidden" id="sessionTimer">00:00</div>
+                  <button class="hud-btn" id="fullscreenBtn" type="button"><span
+                      class="material-symbols-outlined">fullscreen</span></button>
                 </div>
               </div>
-              <div class="overview-card">
-                <div class="card-title">Recent Activity</div>
-                <div class="activity-list" id="activityList"></div>
+              <div class="video-stage" id="videoStage">
+                <div class="stage-orbit stage-orbit-a"></div>
+                <div class="stage-orbit stage-orbit-b"></div>
+                <div class="stage-beam"></div>
+                <video id="teacherVideo" autoplay muted playsinline></video>
+                <video id="pipCamera" autoplay muted playsinline class="pip-camera hidden"></video>
+                <canvas id="whiteboardCanvas" class="whiteboard-canvas hidden"></canvas>
+                <div class="canvas-placeholder" id="canvasPlaceholder">
+                  <span class="material-symbols-outlined ph-icon">videocam_off</span>
+                  <div class="placeholder-copy">
+                    <strong>Build a polished live room before you broadcast.</strong>
+                    <span id="stageHintLine">Select a class, check the teaching mode, then press <strong>Start
+                        Live</strong>.</span>
+                  </div>
+                  <div class="placeholder-pills">
+                    <span class="placeholder-pill">AI teaching</span>
+                    <span class="placeholder-pill">Whiteboard</span>
+                    <span class="placeholder-pill">Screen share</span>
+                  </div>
+                </div>
+                <div class="reaction-overlay" id="reactionOverlay"></div>
               </div>
-              <div class="overview-card">
-                <div class="card-title">Next Steps</div>
-                <div class="task-list" id="nextSteps"></div>
+              <div class="wb-toolbar hidden" id="wbToolbar">
+                <button class="tool-btn active" id="wbPen" type="button"><span
+                    class="material-symbols-outlined">edit</span></button>
+                <input type="color" id="wbColor" value="#ffffff" class="wb-color" />
+                <input type="range" id="wbSize" min="2" max="30" value="4" class="wb-size" />
+                <button class="tool-btn" id="wbEraser" type="button"><span
+                    class="material-symbols-outlined">ink_eraser</span></button>
+                <button class="tool-btn danger" id="wbClear" type="button"><span
+                    class="material-symbols-outlined">delete</span></button>
               </div>
             </div>
-          </section>
-
-          <!-- ══ LIVE STUDIO ══════════════════════════════════════ -->
-          <section class="panel studio-panel" id="tab-studio">
-
-            <!-- Toast notifications -->
-            <div class="toast-area" id="toastArea"></div>
-
-            <!-- Main studio body: video stage + side panel -->
-            <div class="studio-body" id="studioBody">
-
-              <!-- Video stage -->
-              <div class="studio-stage" id="studioStage">
-
-                <!-- Stage top HUD -->
-                <div class="stage-hud">
-                  <div class="hud-left">
-                    <div class="session-pill">
-                      <span class="session-label">Session</span>
-                      <span class="session-title" id="studioClassName">-- No Class Selected --</span>
-                    </div>
-                    <!-- Recording badge -->
-                    <div class="rec-badge hidden" id="recBadge">
-                      <span class="rec-dot"></span> REC
-                    </div>
+            <aside class="studio-side" id="studioPanelAside">
+              <div class="side-card studio-side-card">
+                <div class="side-title-row">
+                  <div>
+                    <div class="side-title">Broadcast Setup</div>
+                    <div class="side-caption">Prepare your class, pick the mode, and launch with confidence.</div>
                   </div>
-                  <div class="hud-right">
-                    <!-- Network quality -->
-                    <div class="net-quality" id="netQuality" title="Network quality">
-                      <span class="net-bar" id="nb1"></span>
-                      <span class="net-bar" id="nb2"></span>
-                      <span class="net-bar" id="nb3"></span>
-                      <span class="net-bar" id="nb4"></span>
-                      <span class="net-label" id="netLabel">Good</span>
-                    </div>
-                    <div class="status-chip" id="liveStatus">Camera off</div>
-                    <!-- Timer -->
-                    <div class="timer-label hidden" id="sessionTimer">00:00</div>
-                    <!-- Fullscreen -->
-                    <button class="hud-btn" id="fullscreenBtn" title="Fullscreen">
-                      <span class="material-symbols-outlined">fullscreen</span>
-                    </button>
-                  </div>
+                  <span class="side-kicker">Studio</span>
                 </div>
-
-                <!-- Main video + PiP camera overlay -->
-                <div class="video-stage" id="videoStage">
-                  <video id="teacherVideo" autoplay muted playsinline></video>
-                  <!-- PiP camera when screen sharing -->
-                  <video id="pipCamera" autoplay muted playsinline class="pip-camera hidden"></video>
-                  <!-- Whiteboard canvas -->
-                  <canvas id="whiteboardCanvas" class="whiteboard-canvas hidden"></canvas>
-                  <!-- Placeholder -->
-                  <div class="canvas-placeholder" id="canvasPlaceholder">
-                    <span class="material-symbols-outlined ph-icon">videocam_off</span>
-                    <span>Select a class and press <strong>Start Live</strong> to begin broadcasting.</span>
-                  </div>
-                </div>
-
-                <!-- Whiteboard tools -->
-                <div class="wb-toolbar hidden" id="wbToolbar">
-                  <button class="tool-btn active" id="wbPen" title="Pen"><span class="material-symbols-outlined">edit</span></button>
-                  <input type="color" id="wbColor" value="#ffffff" class="wb-color" title="Color" />
-                  <input type="range" id="wbSize" min="2" max="30" value="4" class="wb-size" title="Size" />
-                  <button class="tool-btn" id="wbEraser" title="Eraser"><span class="material-symbols-outlined">ink_eraser</span></button>
-                  <button class="tool-btn danger" id="wbClear" title="Clear board"><span class="material-symbols-outlined">delete</span></button>
-                </div>
-
-                <!-- Student tiles row -->
-                <div class="student-tiles" id="studentTiles"></div>
-              </div>
-
-              <!-- Side panel -->
-              <aside class="studio-side" id="studioPanelAside">
-
-                <!-- Controls card -->
-                <div class="side-card">
-                  <div class="side-title">Live Controls</div>
-                  <label for="liveClassSelect">Class</label>
-                  <select id="liveClassSelect"></select>
-                  <div class="class-mode-row">
+                <!-- liveClassSelect replaced by hidden input to preserve JS references -->
+                <input type="hidden" id="liveClassSelect" value="" />
+                <div class="studio-setup-grid">
+                  <label class="studio-field">
+                    <span>Class Mode</span>
                     <select id="classModeSelect"></select>
-                    <div class="mode-group">
-                      <button class="mode-btn" data-mode="ai" type="button">AI</button>
-                      <button class="mode-btn" data-mode="human" type="button">Live</button>
-                    </div>
-                  </div>
-                  <span class="status" id="classModeStatus">Pick a class to update mode.</span>
+                  </label>
                 </div>
-
-                <!-- Participants -->
-                <div class="side-card participants-card">
-                  <div class="participants-header">
-                    <div class="side-title">Participants</div>
-                    <span class="count-pill" id="participantCount">0</span>
-                  </div>
-                  <!-- Raised hands -->
-                  <div class="raised-hands hidden" id="raisedHandsSection">
-                    <div class="rh-label">
-                      <span class="material-symbols-outlined">waving_hand</span>
-                      Raised Hands
-                    </div>
-                    <div id="raisedHandList"></div>
-                  </div>
-                  <div class="participant-list custom-scrollbar" id="participantList">
-                    <div class="status">No learners yet.</div>
-                  </div>
+                <div class="mode-group studio-mode-group">
+                  <button class="mode-btn active" type="button" data-mode="human">
+                    <span class="material-symbols-outlined">co_present</span>
+                    <span>Live Teacher</span>
+                  </button>
+                  <button class="mode-btn" type="button" data-mode="ai">
+                    <span class="material-symbols-outlined">smart_toy</span>
+                    <span>AI Teaching</span>
+                  </button>
                 </div>
-
-                <!-- AI Mentor -->
-                <div class="side-card mentor-card">
-                  <div class="side-title">AI Mentor</div>
-                  <p class="hint">Live insights when session starts.</p>
-                  <div class="mentor-bar">
-                    <div class="mentor-row">
-                      <span class="hint">Comprehension</span>
-                      <span class="mentor-pct" id="comprehensionPct">--</span>
-                    </div>
-                    <div class="mentor-meter">
-                      <div class="mentor-fill" id="comprehensionFill"></div>
-                    </div>
+                <div class="status studio-status" id="classModeStatus">Pick a class to update mode.</div>
+                <div class="studio-checklist">
+                  <div class="check-item">
+                    <span class="material-symbols-outlined">verified</span>
+                    <span>Responsive host controls</span>
                   </div>
-                  <div class="mentor-bar">
-                    <div class="mentor-row">
-                      <span class="hint">Engagement</span>
-                      <span class="mentor-pct" id="engagementPct">--</span>
-                    </div>
-                    <div class="mentor-meter">
-                      <div class="mentor-fill engagement-fill" id="engagementFill"></div>
-                    </div>
+                  <div class="check-item">
+                    <span class="material-symbols-outlined">verified</span>
+                    <span>Professional stage animation</span>
+                  </div>
+                  <div class="check-item">
+                    <span class="material-symbols-outlined">verified</span>
+                    <span>Fast AI and whiteboard switching</span>
                   </div>
                 </div>
-
-                <!-- Live Chat -->
-                <div class="side-card chat-card">
-                  <div class="chat-tabs">
-                    <button class="chat-tab active" id="chatTabBtn" type="button">Live Chat</button>
-                    <button class="chat-tab" id="studentsTabBtn" type="button">Students</button>
+              </div>
+              <div class="side-card studio-side-card participants-card">
+                <div class="participants-header">
+                  <div>
+                    <div class="side-title">Live Room</div>
+                    <div class="side-caption">Watch attendance, hands, and readiness in one place.</div>
                   </div>
-                  <div class="chat-body custom-scrollbar" id="chatBody">
-                    <div class="status">No messages yet.</div>
+                  <span class="count-pill">Host</span>
+                </div>
+                <div class="session-matrix">
+                  <div class="session-metric">
+                    <span class="metric-label">Status</span>
+                    <strong class="metric-value" id="sideSessionState">Offline</strong>
                   </div>
-                  <div class="students-body custom-scrollbar hidden" id="studentsBody">
-                    <div class="status">No connected students.</div>
+                  <div class="session-metric">
+                    <span class="metric-label">Input</span>
+                    <strong class="metric-value" id="sideStreamMode">Camera</strong>
                   </div>
-                  <div class="chat-input">
-                    <input type="text" id="chatInput" placeholder="Type a message or announcement…" autocomplete="off" />
-                    <button class="chat-send" id="chatSendBtn" type="button" title="Send">
-                      <span class="material-symbols-outlined">send</span>
-                    </button>
+                  <div class="session-metric">
+                    <span class="metric-label">Participants</span>
+                    <strong class="metric-value" id="sideParticipantCount">0</strong>
                   </div>
                 </div>
+                <div class="raised-hands hidden" id="raisedHandsSection">
+                  <div class="rh-label"><span class="material-symbols-outlined">front_hand</span> Raised Hands</div>
+                  <div class="raised-hand-list" id="raisedHandList"></div>
+                </div>
+                <div class="join-requests hidden" id="joinRequestsSection">
+                  <div class="rh-label"><span class="material-symbols-outlined">person_add</span> Waiting Room</div>
+                  <div class="join-request-list custom-scrollbar" id="joinRequestList"></div>
+                </div>
+                <div class="participant-list custom-scrollbar" id="participantList">
+                  <div class="status">No learners yet.</div>
+                </div>
+              </div>
+              <div class="side-card studio-side-card ai-teach-card hidden" id="aiTeachCard">
+                <div class="side-title-row">
+                  <div>
+                    <div class="side-title">AI Teaching Copilot</div>
+                    <div class="side-caption">Deliver guided lessons with voice, transcript, and continuous topic flow.
+                    </div>
+                  </div>
+                  <span class="side-kicker side-kicker-ai">AI</span>
+                </div>
+                <div class="ai-teach-status">
+                  <span class="ai-status-dot standby" id="aiStatusDot"></span>
+                  <span id="aiStatusText">AI Standby</span>
+                </div>
+                <label class="studio-field">
+                  <span>Topic</span>
+                  <input id="aiTopicInput" type="text" placeholder="Example: Photosynthesis for grade 8" />
+                </label>
+                <label class="studio-field">
+                  <span>Context</span>
+                  <textarea id="aiContextInput" rows="3"
+                    placeholder="Optional context, exam goal, or lesson angle"></textarea>
+                </label>
+                <div class="ai-teach-row">
+                  <label class="ai-teach-field">
+                    <span>Language</span>
+                    <select id="aiLanguageSelect">
+                      <option value="English">English</option>
+                      <option value="Hindi">Hindi</option>
+                      <option value="Hinglish">Hinglish</option>
+                    </select>
+                  </label>
+                  <label class="ai-teach-field">
+                    <span>Voice</span>
+                    <select id="aiVoiceSelect"></select>
+                  </label>
+                  <label class="ai-teach-field">
+                    <span>Speech Rate</span>
+                    <input id="aiSpeechRate" type="range" min="0.7" max="1.4" step="0.05" value="1" />
+                  </label>
+                  <label class="ai-teach-field">
+                    <span>Pitch</span>
+                    <input id="aiSpeechPitch" type="range" min="0.7" max="1.3" step="0.05" value="1" />
+                  </label>
+                </div>
+                <div class="ai-teach-actions">
+                  <button class="ai-teach-btn start" id="aiTeachStartBtn" type="button">
+                    <span class="material-symbols-outlined">play_circle</span>
+                    <span>Start AI</span>
+                  </button>
+                  <button class="ai-teach-btn pause hidden" id="aiTeachPauseBtn" type="button">
+                    <span class="material-symbols-outlined" id="aiPauseIcon">pause</span>
+                    <span id="aiPauseLabel">Pause</span>
+                  </button>
+                  <button class="ai-teach-btn stop hidden" id="aiTeachStopBtn" type="button">
+                    <span class="material-symbols-outlined">stop_circle</span>
+                    <span>Stop AI</span>
+                  </button>
+                </div>
+                <div class="ai-transcript-container hidden" id="aiTranscriptContainer">
+                  <div class="ai-transcript-label">Live Transcript</div>
+                  <div class="ai-transcript custom-scrollbar" id="aiTranscript"></div>
+                </div>
+              </div>
+              <div class="side-card studio-side-card chat-card">
+                <div class="chat-tabs">
+                  <button class="chat-tab active" id="chatTabBtn" type="button">Chat</button>
+                  <button class="chat-tab" id="studentsTabBtn" type="button">Students</button>
+                </div>
+                <div class="chat-body custom-scrollbar" id="chatBody">
+                  <div class="status">Messages from your room will appear here.</div>
+                </div>
+                <div class="students-body custom-scrollbar hidden" id="studentsBody">
+                  <div class="status">No connected students.</div>
+                </div>
+                <div class="chat-input">
+                  <input type="text" id="chatInput" placeholder="Send a quick instruction or announcement..." />
+                  <button class="chat-send" id="chatSendBtn" type="button"><span
+                      class="material-symbols-outlined">send</span></button>
+                </div>
+              </div>
+            </aside>
+          </div>
 
-              </aside>
-            </div>
-
-            <!-- ── Footer control bar ───────────────────────────── -->
-            <div class="teacher-footer-bar" id="footerBar">
-              <!-- Mic -->
-              <button class="ctrl-btn" id="micBtn" type="button" data-active="true" title="Mute/Unmute">
+          <!-- ── Floating Footer Dock ───────────────────────────── -->
+          <div class="teacher-footer-bar hidden" id="footerBar">
+            <div class="dock-group dock-left">
+              <button class="ctrl-btn" id="micBtn" type="button" data-tooltip="Mute / Unmute">
                 <span class="material-symbols-outlined" id="micIcon">mic</span>
                 <span class="ctrl-label">Mic</span>
               </button>
-              <!-- Camera -->
-              <button class="ctrl-btn" id="camBtn" type="button" data-active="true" title="Camera on/off">
+              <button class="ctrl-btn" id="camBtn" type="button" data-tooltip="Camera on/off">
                 <span class="material-symbols-outlined" id="camIcon">videocam</span>
                 <span class="ctrl-label">Camera</span>
               </button>
-              <!-- Go Live -->
-              <button class="ctrl-btn go-live" id="liveToggle" type="button">
+            </div>
+            <div class="dock-group dock-center">
+              <button class="ctrl-btn go-live" id="liveToggle" type="button" data-tooltip="Start broadcasting">
                 <span class="material-symbols-outlined">broadcast_on_home</span>
-                <span class="ctrl-label" id="liveToggleLabel">Start Live</span>
+                <span class="ctrl-label" id="liveToggleLabel">Go Live</span>
               </button>
-              <!-- Screen share -->
-              <button class="ctrl-btn" id="screenShareToggle" type="button" title="Share screen">
+              <button class="ctrl-btn" id="screenShareToggle" type="button" data-tooltip="Share screen">
                 <span class="material-symbols-outlined" id="screenShareIcon">screen_share</span>
-                <span class="ctrl-label" id="screenShareLabel">Share Screen</span>
+                <span class="ctrl-label" id="screenShareLabel">Screen</span>
               </button>
-              <!-- Whiteboard -->
-              <button class="ctrl-btn" id="wbToggleBtn" type="button" title="Whiteboard">
+              <button class="ctrl-btn" id="wbToggleBtn" type="button" data-tooltip="Open whiteboard">
                 <span class="material-symbols-outlined">draw</span>
                 <span class="ctrl-label">Board</span>
               </button>
-              <!-- Record -->
-              <button class="ctrl-btn" id="recordBtn" type="button" title="Record session">
+              <button class="ctrl-btn" id="recordBtn" type="button" data-tooltip="Record session">
                 <span class="material-symbols-outlined" id="recordIcon">fiber_manual_record</span>
                 <span class="ctrl-label" id="recordLabel">Record</span>
               </button>
-              <!-- Chat toggle (mobile) -->
-              <button class="ctrl-btn" id="chatToggleBtn" type="button" title="Chat">
+            </div>
+            <div class="dock-group dock-right">
+              <button class="ctrl-btn" id="aiTeachToggleBtn" type="button" data-tooltip="AI Teacher">
+                <span class="material-symbols-outlined">smart_toy</span>
+                <span class="ctrl-label">AI</span>
+              </button>
+              <button class="ctrl-btn" id="reactionsBtn" type="button" data-tooltip="Send a reaction">
+                <span class="material-symbols-outlined">add_reaction</span>
+                <span class="ctrl-label">React</span>
+              </button>
+              <button class="ctrl-btn" id="chatToggleBtn" type="button" data-tooltip="Chat panel">
                 <span class="material-symbols-outlined">forum</span>
                 <span class="ctrl-label">Chat</span>
               </button>
-              <!-- Toggle side panel -->
-              <button class="ctrl-btn" id="toggleHostPanel" type="button" title="Toggle panel">
+              <button class="ctrl-btn" id="toggleHostPanel" type="button" data-tooltip="Toggle panel">
                 <span class="material-symbols-outlined">group</span>
                 <span class="ctrl-label">Panel</span>
               </button>
-              <!-- End call -->
-              <button class="ctrl-btn danger" id="endCallBtn" type="button">
+              <button class="ctrl-btn danger" id="endCallBtn" type="button" data-tooltip="End session">
                 <span class="material-symbols-outlined">call_end</span>
                 <span class="ctrl-label">End</span>
               </button>
             </div>
 
-          </section>
-
-          <!-- ══ CREATE ══════════════════════════════════════════ -->
-          <section class="panel" id="tab-create">
-            <div class="panel-header">
-              <div>
-                <div class="panel-title">Create Studio</div>
-                <div class="panel-subtitle">Build classes, quizzes, and assignments.</div>
-              </div>
+            <!-- Reactions popup -->
+            <div class="reactions-popup hidden" id="reactionsPopup">
+              <button class="reaction-emoji" data-emoji="👍">👍</button>
+              <button class="reaction-emoji" data-emoji="👏">👏</button>
+              <button class="reaction-emoji" data-emoji="🎉">🎉</button>
+              <button class="reaction-emoji" data-emoji="❤️">❤️</button>
+              <button class="reaction-emoji" data-emoji="😂">😂</button>
+              <button class="reaction-emoji" data-emoji="🤔">🤔</button>
+              <button class="reaction-emoji" data-emoji="🔥">🔥</button>
+              <button class="reaction-emoji" data-emoji="✅">✅</button>
             </div>
-            <div class="panel-grid">
-              <div class="card">
-                <div class="card-header">
-                  <h2>Create Class</h2>
-                  <p>Build a new subject for your students.</p>
-                </div>
-                <form class="form" id="classForm">
-                  <label for="classSubject">Subject</label>
-                  <input id="classSubject" type="text" placeholder="Subject name" required />
-                  <label for="classDesc">Description</label>
-                  <textarea id="classDesc" rows="3" placeholder="Short summary"></textarea>
-                  <label for="classNext">Next Session</label>
-                  <input id="classNext" type="text" placeholder="Next session time" />
-                  <label for="classSchedule">Schedule Notes</label>
-                  <input id="classSchedule" type="text" placeholder="Schedule notes" />
-                  <label for="classUpcoming">Upcoming Sessions (one per line)</label>
-                  <textarea id="classUpcoming" rows="3" placeholder="One session per line"></textarea>
-                  <button type="submit">Create Class</button>
-                  <span class="status" id="classStatus">Ready</span>
-                </form>
-              </div>
+          </div>
 
-              <div class="card">
-                <div class="card-header">
-                  <h2>Create Quiz</h2>
-                  <p>Add multiple questions for one quiz session.</p>
-                </div>
-                <form class="form" id="quizForm">
-                  <label for="quizClass">Class</label>
-                  <select id="quizClass"></select>
-                  <div class="question-stack" id="questionList"></div>
-                  <div class="quiz-actions">
-                    <button type="button" class="ghost-btn" id="addQuestion">Add Question</button>
-                    <button type="submit">Publish Quiz</button>
-                    <span class="status" id="quizStatus">Ready</span>
-                  </div>
-                </form>
-              </div>
+        </section>
 
-              <div class="card">
-                <div class="card-header">
-                  <h2>Create Assignment</h2>
-                  <p>Give students deeper practice.</p>
-                </div>
-                <form class="form" id="assignmentForm">
-                  <label for="assignmentClass">Class</label>
-                  <select id="assignmentClass"></select>
-                  <label for="assignmentTitle">Title</label>
-                  <input id="assignmentTitle" type="text" placeholder="Assignment title" required />
-                  <label for="assignmentDesc">Description</label>
-                  <textarea id="assignmentDesc" rows="4" placeholder="Describe the task"></textarea>
-                  <button type="submit">Publish Assignment</button>
-                  <span class="status" id="assignmentStatus">Ready</span>
-                </form>
-              </div>
+        <!-- ══ CREATE QUIZ ══════════════════════════════════════ -->
+        <section class="panel" id="tab-create-quiz">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">Quiz Exams</div>
+              <div class="panel-subtitle">Select an exam to edit or create a new one.</div>
             </div>
-          </section>
-
-          <!-- ══ LIBRARY ══════════════════════════════════════════ -->
-          <section class="panel" id="tab-library">
-            <div class="panel-header">
-              <div>
-                <div class="panel-title">Content Library</div>
-                <div class="panel-subtitle">Browse and filter everything you have created.</div>
-              </div>
-            </div>
-            <div class="library-grid">
-              <div class="library-section">
-                <div class="library-head">
-                  <h3>Classes</h3>
-                  <input id="classSearch" type="text" placeholder="Search classes" />
-                </div>
-                <div id="classList" class="list"></div>
-              </div>
-              <div class="library-section">
-                <div class="library-head">
-                  <h3>Quizzes</h3>
-                  <input id="quizSearch" type="text" placeholder="Search quizzes" />
-                  <select id="quizClassFilter"></select>
-                </div>
-                <div id="quizList" class="list"></div>
-              </div>
-              <div class="library-section">
-                <div class="library-head">
-                  <h3>Assignments</h3>
-                  <input id="assignmentSearch" type="text" placeholder="Search assignments" />
-                  <select id="assignmentClassFilter"></select>
-                </div>
-                <div id="assignmentList" class="list"></div>
-              </div>
-            </div>
-          </section>
-
-          <!-- ══ SUBMISSIONS ══════════════════════════════════════ -->
-          <section class="panel" id="tab-submissions">
-            <div class="panel-header">
-              <div>
-                <div class="panel-title">Submissions</div>
-                <div class="panel-subtitle">Review student work across quizzes and assignments.</div>
-              </div>
-              <div class="submission-filters">
-                <input id="submissionSearch" type="text" placeholder="Search student" />
-                <select id="submissionClassFilter"></select>
-                <select id="submissionRange">
-                  <option value="">Range: All time</option>
-                  <option value="7">Range: Last 7 days</option>
-                  <option value="30">Range: Last 30 days</option>
-                  <option value="90">Range: Last 90 days</option>
+            <div class="new-quiz" id="new-quiz">+ New Exam</div>
+          </div>
+          <div class="AssignQuiz">
+            <div class="scheduled-quiz-card">
+              <div class="panel-title">Create Scheduled Exam</div>
+              <div class="panel-subtitle">Set the exam window, add questions, and publish it for students.</div>
+              <form class="AssignQuizForm" id="quizForm">
+                <label for="QuizNameLabel">Quiz name</label>
+                <input type="text" name="QuizNameLabel" class="QuizNameLabel" id="QuizNameLabel"
+                  placeholder="Enter name of Quiz...">
+                <label for="quizClass">Class</label>
+                <select id="quizClass">
+                  <option value="">Select a class</option>
                 </select>
-                <button class="ghost-btn" id="refreshSubmissions">Refresh</button>
+                <div class="dateDiv">
+                  <div class="dateField">
+                    <label for="quizStartTime">Start DateTime</label>
+                    <input type="datetime-local" name="quizStartTime" class="quizStartTime" id="quizStartTime">
+                  </div>
+                  <div class="dateField">
+                    <label for="quizEndTime">End DateTime</label>
+                    <input type="datetime-local" name="quizEndTime" class="quizEndTime" id="quizEndTime">
+                  </div>
+                </div>
+                <div class="questionAreaHeader">
+                  <label class="panel-title">Question Area</label>
+                  <div class="questionAreaHeaderButtons">
+                    <button class="addQuestion" type="button">+ Add Question</button>
+                    <button class="generate-ai" id="generate-ai">✨ Generate with AI</button>
+                  </div>
+                </div>
+                <div class="questions" id="questionList">
+                  <!--Questions will be populated by JavaScript-->
+                </div>
+              </form>
+              <div class="PublishQuizbtn">
+                <button class="publishQuizbtn" type="submit" form="quizForm">Publish</button>
+                <button class="cancelButton" type="button">Cancel</button>
+                <span class="status" id="quizStatus">Ready</span>
               </div>
             </div>
-            <div class="submission-grid">
-              <div class="submission-card">
-                <div class="list-title">Quiz Submissions</div>
-                <div class="list-meta" id="quizSubmissionMeta">0 submissions</div>
-                <div id="quizSubmissionList" class="list"></div>
-              </div>
-              <div class="submission-card">
-                <div class="list-title">Assignment Submissions</div>
-                <div class="list-meta" id="assignmentSubmissionMeta">0 submissions</div>
-                <div id="assignmentSubmissionList" class="list"></div>
-              </div>
-            </div>
-          </section>
+          </div>
+          <div class="exams-List" id="examsList">
+            <!--==================Exams will load dynamically=================-->
+          </div>
+        </section>
 
+        <!-- ══ CREATE ASSIGNMENT ════════════════════════════════ -->
+        <section class="panel" id="tab-create-assignment">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">Create Assignment</div>
+              <div class="panel-subtitle">Give students deeper practice.</div>
+            </div>
+            <div class="ai-sec"><button class="generate-ai" id="generate-ai">✨ Generate with AI</button></div>
+          </div>
+          <form class="form" id="assignmentForm">
+            <label for="assignmentTitle">Title</label>
+            <input id="assignmentTitle" type="text" placeholder="Assignment title" required />
+            <label for="assignmentDesc">Description</label>
+            <textarea id="assignmentDesc" rows="4" placeholder="Describe the task"></textarea>
+            <button type="submit">Publish Assignment</button>
+            <span class="status" id="assignmentStatus">Ready</span>
+          </form>
+        </section>
+
+        <!-- ══ LIBRARY ══════════════════════════════════════════ -->
+        <section class="panel" id="tab-library">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">Content Library</div>
+              <div class="panel-subtitle">Browse and filter everything you have created.</div>
+            </div>
+          </div>
+          <div class="library-grid">
+            <div class="library-section">
+              <div class="library-head">
+                <h3>Classes</h3>
+                <input id="classSearch" type="text" placeholder="Search classes" />
+              </div>
+              <div id="classList" class="list"></div>
+            </div>
+            <div class="library-section">
+              <div class="library-head">
+                <h3>Quizzes</h3>
+                <input id="quizSearch" type="text" placeholder="Search quizzes" />
+                <select id="quizClassFilter"></select>
+              </div>
+              <div id="quizList" class="list"></div>
+            </div>
+            <div class="library-section">
+              <div class="library-head">
+                <h3>Assignments</h3>
+                <input id="assignmentSearch" type="text" placeholder="Search assignments" />
+                <select id="assignmentClassFilter"></select>
+              </div>
+              <div id="assignmentList" class="list"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ══ SUBMISSIONS ══════════════════════════════════════ -->
+        <section class="panel" id="tab-submissions">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">Submissions</div>
+              <div class="panel-subtitle">Review student work across quizzes and assignments.</div>
+            </div>
+            <div class="submission-filters">
+              <input id="submissionSearch" type="text" placeholder="Search student" />
+              <select id="submissionClassFilter"></select>
+              <select id="submissionRange">
+                <option value="">Range: All time</option>
+                <option value="7">Range: Last 7 days</option>
+                <option value="30">Range: Last 30 days</option>
+                <option value="90">Range: Last 90 days</option>
+              </select>
+              <button class="ghost-btn" id="refreshSubmissions">Refresh</button>
+            </div>
+          </div>
+          <div class="submission-grid">
+            <div class="submission-card">
+              <div class="list-title">Quiz Submissions</div>
+              <div class="list-meta" id="quizSubmissionMeta">0 submissions</div>
+              <div id="quizSubmissionList" class="list"></div>
+            </div>
+            <div class="submission-card">
+              <div class="list-title">Assignment Submissions</div>
+              <div class="list-meta" id="assignmentSubmissionMeta">0 submissions</div>
+              <div id="assignmentSubmissionList" class="list"></div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- ── Quiz Parameters Modal ──────────────────────────────────── -->
+  <div id="quizParamsModal" class="modal hidden">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Generate Quiz Questions</h2>
+        <button class="modal-close" id="closeQuizModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="numQuestionsInput">Number of Questions (1-10)</label>
+          <input 
+            type="number" 
+            id="numQuestionsInput" 
+            min="1" 
+            max="10" 
+            value="3" 
+            placeholder="Enter number of questions"
+          />
         </div>
-      </main>
+        <div class="form-group">
+          <label for="difficultySelect">Difficulty Level</label>
+          <select id="difficultySelect">
+            <option value="easy">Easy</option>
+            <option value="medium" selected>Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="questionTypeSelect">Question Type</label>
+          <select id="questionTypeSelect">
+            <option value="radio">Multiple Choice (Radio)</option>
+            <option value="checkbox">Multi-Select (Checkbox)</option>
+            <option value="text">Short Answer (Text)</option>
+            <option value="hybrid">Mixed Types (Hybrid)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <p class="form-hint">
+            <strong>Hybrid:</strong> Generates a mix of multiple choice, checkbox, and text questions.
+          </p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel" id="cancelQuizModal">Cancel</button>
+        <button class="btn-primary" id="confirmQuizModal">Generate</button>
+      </div>
     </div>
+  </div>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="script.js"></script>
-  </body>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="/shared/auth-client.js"></script>
+  <script src="script.js"></script>
+</body>
+
 </html>
